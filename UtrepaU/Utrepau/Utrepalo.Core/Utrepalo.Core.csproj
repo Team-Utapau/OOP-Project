@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{68AC42B8-10B9-4A8F-989F-B8987524B6BC}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{38E77E6E-7D22-4EB4-9A02-E4A0646DDF08}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Utrepau.Client</RootNamespace>
-    <AssemblyName>Utrepau.Client</AssemblyName>
+    <RootNamespace>Utrepalo.Core</RootNamespace>
+    <AssemblyName>Utrepalo.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -32,16 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -50,26 +39,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="GameObjects\Character.cs" />
+    <Compile Include="GameObjects\Class\Mage.cs" />
+    <Compile Include="GameObjects\Class\Paladin.cs" />
+    <Compile Include="GameObjects\Class\Shaman.cs" />
+    <Compile Include="GameObjects\Fighter.cs" />
+    <Compile Include="GameObjects\Interfaces\IFighter.cs" />
+    <Compile Include="GameObjects\Upgrade.cs" />
+    <Compile Include="GameObjects\Class\Warrior.cs" />
+    <Compile Include="GameObjects\Creature.cs" />
+    <Compile Include="GameObjects\Enemy.cs" />
+    <Compile Include="GameObjects\Interfaces\ICreature.cs" />
+    <Compile Include="GameObjects\Interfaces\ITalant.cs" />
+    <Compile Include="GameObjects\Talant.cs" />
+    <Compile Include="GameObjects\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Utrepalo.Core\Utrepalo.Core.csproj">
-      <Project>{38E77E6E-7D22-4EB4-9A02-E4A0646DDF08}</Project>
-      <Name>Utrepalo.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Utrepau.Data\Utrepau.Data.csproj">
-      <Project>{8d09708c-b493-4948-87d6-a2a40dcc3f61}</Project>
-      <Name>Utrepau.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Utrepau.Models\Utrepau.Models.csproj">
-      <Project>{03D11881-AFDA-45DB-84AC-B69B3E0777A5}</Project>
-      <Name>Utrepau.Models</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

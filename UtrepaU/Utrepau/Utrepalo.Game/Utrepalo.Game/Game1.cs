@@ -11,6 +11,7 @@ namespace Utrepalo.Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Texture2D mainCharRight;
 
         public Game1()
         {
@@ -39,7 +40,7 @@ namespace Utrepalo.Game
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            mainCharRight = Content.Load<Texture2D>("rightMainChar");
             // TODO: use this.Content to load your game content here
         }
 
@@ -74,9 +75,11 @@ namespace Utrepalo.Game
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
+            GraphicsDevice.Clear(Color.Gold);
+            spriteBatch.Begin();
+            spriteBatch.Draw(mainCharRight,new Rectangle(50,50,50,50),Color.White );
             // TODO: Add your drawing code here
+            spriteBatch.End();;
 
             base.Draw(gameTime);
         }
