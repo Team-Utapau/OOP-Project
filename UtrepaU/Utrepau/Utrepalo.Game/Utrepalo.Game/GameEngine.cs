@@ -53,6 +53,21 @@ namespace Utrepalo.Game
 
         protected override void Initialize()
         {
+            int x = Window.ClientBounds.Width / 2 - BUTTON_WIDTH / 2;
+            int y = Window.ClientBounds.Height / 2 -
+                NUMBER_OF_BUTTONS / 2 * BUTTON_HEIGHT -
+                (NUMBER_OF_BUTTONS % 2) * BUTTON_HEIGHT / 2;
+            for (int i = 0; i < NUMBER_OF_BUTTONS; i++)
+            {
+                button_state[i] = BState.UP;
+                button_color[i] = Color.White;
+                button_timer[i] = 0.0;
+                button_rectangle[i] = new Rectangle(x, y, BUTTON_WIDTH, BUTTON_HEIGHT);
+                y += BUTTON_HEIGHT;
+            }
+            IsMouseVisible = true;
+            background_color = Color.CornflowerBlue;
+
             base.Initialize();
         }
 
@@ -64,7 +79,7 @@ namespace Utrepalo.Game
             //mainCharRight = Content.Load<Texture2D>("rightMainChar");
             // TODO: use this.Content to load your game content here
             button_texture[login] =
-                Content.Load<Texture2D>(@"images/download");
+             Content.Load<Texture2D>(@"images/download");
             button_texture[register] =
                 Content.Load<Texture2D>(@"images/register_now");
         }
@@ -90,10 +105,7 @@ namespace Utrepalo.Game
             {
                 spriteBatch.Draw(button_texture[i], button_rectangle[i], button_color[i]);
             }
-            // spriteBatch.Draw(mainCharRight,new Rectangle(50,50,50,50),Color.White );
-            // TODO: Add your drawing code here
-            spriteBatch.End(); ;
-
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
