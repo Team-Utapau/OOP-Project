@@ -4,9 +4,9 @@
     {
         private string name;
         private string password;
-        private Character character;
+        private PlayerCharacter character;
 
-        public User(string name,string password, Character character)
+        public User(string name,string password, PlayerCharacter character)
         {
             this.Character = this.character;
             this.Name = this.name;
@@ -14,6 +14,6 @@
         }
         public string Name { get; set; }
         public string Password { get; set; }
-        public Character Character { get; set; }
+        public PlayerCharacter Character { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Utrepalo.Core.GameObjects.Interfaces
 {
-    public interface IFighter
+    public interface ICharacter
     {
         void AddCreatures(Creature creature);
     }

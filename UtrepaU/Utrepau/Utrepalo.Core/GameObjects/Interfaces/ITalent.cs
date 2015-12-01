@@ -1,6 +1,6 @@
 ﻿namespace Utrepalo.Core.GameObjects.Interfaces
 {
-    public interface ITalant
+    public interface ITalent
     {
         int GiveLife();
 

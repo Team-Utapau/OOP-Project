@@ -2,7 +2,7 @@
 {
     using GameObjects.Interfaces;
 
-    public  class Talant : ITalant
+    public  class Talent : ITalent
     {
         public  int GiveLife()
         {

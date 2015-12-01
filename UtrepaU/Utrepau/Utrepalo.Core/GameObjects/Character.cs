@@ -1,20 +1,34 @@
-﻿namespace Utrepalo.Core.GameObjects
-{
-    using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-    public class Character : Fighter
+namespace Utrepalo.Core.GameObjects
+{
+    using Interfaces;
+
+    public abstract class Character : ICharacter
     {
-        private int gold;
-        private int lifes;
-        public Character(string name)
-            :base(name)
+        private List<Creature> creatures;
+        private string name;
+
+        public Character(string name )
         {
-            this.Gold = gold;
-            this.Lifes = lifes;
+            this.Name = name;
+            this.creatures = new List<Creature>();
+        }
+        public string Name { get; set; }
+
+        public IEnumerable<Creature> Creatures
+        {
+            get { return this.creatures; }
 
         }
-        public int Gold  { get; set; }
-        public int Lifes { get; set; }
 
+        public void AddCreatures(Creature creature)
+        {
+            this.creatures.Add(creature);
+        }
     }
 }

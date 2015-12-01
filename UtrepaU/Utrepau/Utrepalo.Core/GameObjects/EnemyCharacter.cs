@@ -2,10 +2,10 @@
 {
     using System.Collections.Generic;
 
-    public class Enemy : Fighter
+    public class EnemyCharacter : Character
     {
         private int level;
-        public Enemy(string name,int level )
+        public EnemyCharacter(string name,int level )
             :base(name)
         {
             this.Level = level;

@@ -39,19 +39,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameObjects\Character.cs" />
+    <Compile Include="GameObjects\PlayerCharacter.cs" />
     <Compile Include="GameObjects\Class\Mage.cs" />
     <Compile Include="GameObjects\Class\Paladin.cs" />
     <Compile Include="GameObjects\Class\Shaman.cs" />
-    <Compile Include="GameObjects\Fighter.cs" />
-    <Compile Include="GameObjects\Interfaces\IFighter.cs" />
+    <Compile Include="GameObjects\Character.cs" />
+    <Compile Include="GameObjects\Interfaces\ICharacter.cs" />
     <Compile Include="GameObjects\Upgrade.cs" />
     <Compile Include="GameObjects\Class\Warrior.cs" />
     <Compile Include="GameObjects\Creature.cs" />
-    <Compile Include="GameObjects\Enemy.cs" />
+    <Compile Include="GameObjects\EnemyCharacter.cs" />
     <Compile Include="GameObjects\Interfaces\ICreature.cs" />
-    <Compile Include="GameObjects\Interfaces\ITalant.cs" />
-    <Compile Include="GameObjects\Talant.cs" />
+    <Compile Include="GameObjects\Interfaces\ITalent.cs" />
+    <Compile Include="GameObjects\Talent.cs" />
     <Compile Include="GameObjects\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
