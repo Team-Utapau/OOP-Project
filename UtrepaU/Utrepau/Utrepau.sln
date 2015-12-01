@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utrepau.Data", "Utrepau.Data\Utrepau.Data.csproj", "{8D09708C-B493-4948-87D6-A2A40DCC3F61}"
 EndProject
@@ -12,8 +12,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utrepalo.Game", "Utrepalo.Game\Utrepalo.Game\Utrepalo.Game.csproj", "{29821816-B6F6-4D21-9721-485D4208D529}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utrepalo.GameContent", "Utrepalo.Game\Utrepalo.GameContent\Utrepalo.GameContent.contentproj", "{DE0E256D-CBD9-4388-A6A5-BCFEFD4593F8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utrepalo.Core", "Utrepalo.Core\Utrepalo.Core.csproj", "{38E77E6E-7D22-4EB4-9A02-E4A0646DDF08}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,16 +69,6 @@ Global
 		{DE0E256D-CBD9-4388-A6A5-BCFEFD4593F8}.Release|Any CPU.ActiveCfg = Release|x86
 		{DE0E256D-CBD9-4388-A6A5-BCFEFD4593F8}.Release|Mixed Platforms.ActiveCfg = Release|x86
 		{DE0E256D-CBD9-4388-A6A5-BCFEFD4593F8}.Release|x86.ActiveCfg = Release|x86
-		{38E77E6E-7D22-4EB4-9A02-E4A0646DDF08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{38E77E6E-7D22-4EB4-9A02-E4A0646DDF08}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{38E77E6E-7D22-4EB4-9A02-E4A0646DDF08}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{38E77E6E-7D22-4EB4-9A02-E4A0646DDF08}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{38E77E6E-7D22-4EB4-9A02-E4A0646DDF08}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{38E77E6E-7D22-4EB4-9A02-E4A0646DDF08}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{38E77E6E-7D22-4EB4-9A02-E4A0646DDF08}.Release|Any CPU.Build.0 = Release|Any CPU
-		{38E77E6E-7D22-4EB4-9A02-E4A0646DDF08}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{38E77E6E-7D22-4EB4-9A02-E4A0646DDF08}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{38E77E6E-7D22-4EB4-9A02-E4A0646DDF08}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,3 +1,5 @@
+using System.Xml;
+
 namespace Utrepalo.Game
 {
 #if WINDOWS || XBOX
@@ -5,7 +7,8 @@ namespace Utrepalo.Game
     {
         static void Main()
         {
-            using (GameEngine game = new GameEngine())
+            var controller = new KeyboardController();
+            using (GameEngine game = new GameEngine(controller))
             {
                 game.Run();
             }
