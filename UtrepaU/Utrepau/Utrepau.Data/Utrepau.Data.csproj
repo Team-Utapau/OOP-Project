@@ -63,6 +63,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Utrepalo.Game\Utrepalo.Game\Utrepalo.Game.csproj">
+      <Project>{29821816-b6f6-4d21-9721-485d4208d529}</Project>
+      <Name>Utrepalo.Game</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Utrepau.Models\Utrepau.Models.csproj">
       <Project>{03d11881-afda-45db-84ac-b69b3e0777a5}</Project>
       <Name>Utrepau.Models</Name>

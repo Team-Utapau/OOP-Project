@@ -62,6 +62,10 @@
       <Project>{38E77E6E-7D22-4EB4-9A02-E4A0646DDF08}</Project>
       <Name>Utrepalo.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Utrepalo.Game\Utrepalo.Game\Utrepalo.Game.csproj">
+      <Project>{29821816-b6f6-4d21-9721-485d4208d529}</Project>
+      <Name>Utrepalo.Game</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Utrepau.Data\Utrepau.Data.csproj">
       <Project>{8d09708c-b493-4948-87d6-a2a40dcc3f61}</Project>
       <Name>Utrepau.Data</Name>

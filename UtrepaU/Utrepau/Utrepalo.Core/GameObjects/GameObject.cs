@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Utrepalo.Core.Engine;
 using Utrepalo.Core.GameObjects.Interfaces;
+using Utrepalo.Game;
 
 namespace Utrepalo.Core.GameObjects
 {

@@ -1,17 +1,11 @@
-﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Utrepalo.Core.GameObjects;
-using Utrepalo.Core.GameObjects.Interfaces;
 
-namespace Utrepalo.Core.Engine
+namespace Utrepalo.Game
 {
-    public class GameEngine:Game
+    public class GameEngine : Microsoft.Xna.Framework.Game
     {
         enum BState
         {
@@ -24,7 +18,7 @@ namespace Utrepalo.Core.Engine
             login = 0,
             register = 1,
             BUTTON_HEIGHT = 100,
-           BUTTON_WIDTH = 150;
+            BUTTON_WIDTH = 150;
 
         Color background_color;
         Color[] button_color = new Color[NUMBER_OF_BUTTONS];
@@ -45,12 +39,12 @@ namespace Utrepalo.Core.Engine
         public const int WindowsHeight = 400;
         public const int WindowsWidth = 400;
         private IController controller;
-        public static List<GameObject>GameObjects=new List<GameObject>();
+        public static List<GameObject> GameObjects = new List<GameObject>();
         GraphicsDeviceManager graphics;
         public GameEngine(IController controller)
-            :base()
+            : base()
         {
-            this.graphics=new GraphicsDeviceManager(this);
+            this.graphics = new GraphicsDeviceManager(this);
             this.controller = controller;
             Content.RootDirectory = "Content";
         }
@@ -102,3 +96,4 @@ namespace Utrepalo.Core.Engine
         }
     }
 }
+

@@ -5,7 +5,7 @@ namespace Utrepalo.Game
     {
         static void Main()
         {
-            using (Game1 game = new Game1())
+            using (GameEngine game = new GameEngine())
             {
                 game.Run();
             }
