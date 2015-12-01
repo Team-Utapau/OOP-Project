@@ -45,6 +45,7 @@
     <Compile Include="Engine\GameEngine.cs" />
     <Compile Include="GameObjects\GameObject.cs" />
     <Compile Include="GameObjects\Interfaces\ICollidable.cs" />
+    <Compile Include="GameObjects\Interfaces\IController.cs" />
     <Compile Include="GameObjects\PlayerCharacter.cs" />
     <Compile Include="GameObjects\Class\Mage.cs" />
     <Compile Include="GameObjects\Class\Paladin.cs" />
