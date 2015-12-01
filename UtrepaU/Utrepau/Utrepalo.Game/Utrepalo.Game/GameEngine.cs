@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -29,6 +31,9 @@ namespace Utrepalo.Game
         Texture2D[] button_texture = new Texture2D[NUMBER_OF_BUTTONS];
         double[] button_timer = new double[NUMBER_OF_BUTTONS];
 
+        // test
+        Texture2D ball;
+
         bool mpressed, prev_mpressed = false;
         int mx, my;
         double frame_time;
@@ -38,8 +43,11 @@ namespace Utrepalo.Game
         /// ////////////////////////
         /// </summary>
         public const int Offset = 25;
-        public const int WindowsHeight = 400;
-        public const int WindowsWidth = 400;
+        public const int WindowsHeight = 600;
+        public const int WindowsWidth = 1024;
+
+        public static SpriteFont Font;
+
         private IController controller;
         public static List<GameObject> GameObjects = new List<GameObject>();
         GraphicsDeviceManager graphics;
@@ -73,9 +81,16 @@ namespace Utrepalo.Game
 
         protected override void LoadContent()
         {
-
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            this.graphics.PreferredBackBufferWidth = WindowsWidth;
+            this.graphics.PreferredBackBufferHeight = WindowsHeight;
+            this.graphics.ApplyChanges();
+
+            Font = this.Content.Load<SpriteFont>(@"Fonts/ArialFont");
+            //this.gamePauseFont = this.Content.Load<SpriteFont>("Graphics/Fonts/GamePauseFont");
+            ball = this.Content.Load<Texture2D>(@"images/ball-resize");
+
             //mainCharRight = Content.Load<Texture2D>("rightMainChar");
             // TODO: use this.Content to load your game content here
             button_texture[login] =
@@ -105,6 +120,17 @@ namespace Utrepalo.Game
             {
                 spriteBatch.Draw(button_texture[i], button_rectangle[i], button_color[i]);
             }
+
+            
+            //tradeMark.Append(string.Format("© {0} UTAPAU GAMES", DateTime.Now.Year));
+            spriteBatch.DrawString(Font, "UTAPAU GAMES", new Vector2(0, 250), Color.Brown);
+
+            spriteBatch.Draw(this.ball, Vector2.Zero, Color.Brown);
+            for (int i = 0; i < 32; i++)
+            {
+                spriteBatch.Draw(this.ball, new Vector2(i * 32, 0), Color.Brown);
+            }
+
             spriteBatch.End();
             base.Draw(gameTime);
         }
