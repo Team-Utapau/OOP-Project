@@ -1,11 +1,14 @@
-﻿namespace Utrepalo.Core.GameObjects
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+
+namespace Utrepalo.Core.GameObjects
 {
     using System;
     using System.Collections.Generic;
     using GameObjects.Class;
     using GameObjects.Interfaces;
 
-    public abstract class Creature : ICreature
+    public abstract class Creature :GameObject, ICreature
     {
         private IEnumerable<Upgrade> upgrades = new List<Upgrade>(); 
         private int resources;
@@ -13,7 +16,8 @@
         private int damage;
         private int armor;
         private bool isEnemy;
-        public Creature(int resources, int health, int damage, int armor,bool isEnemy)
+        public Creature(Texture2D objTexture,Rectangle rectangle,int resources, int health, int damage, int armor,bool isEnemy)
+            :base(objTexture,rectangle)
         {
             this.Resourse = resources;
             this.Health = health;
@@ -44,6 +48,15 @@
         public virtual void Attack()
         {
             throw new NotImplementedException();
+        }
+        public override void Update()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void RespondToCollision(GameObject hitObject)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

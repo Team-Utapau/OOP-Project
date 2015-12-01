@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Utrepalo.Core.GameObjects
 {
     using Interfaces;
 
-    public abstract class Character : ICharacter
+    public abstract class Character :GameObject, ICharacter
     {
         private List<Creature> creatures;
         private string name;
-
-        public Character(string name )
+        
+        public Character(Texture2D objTexture,Rectangle rectangle,string name)
+            :base(objTexture,rectangle)
         {
             this.Name = name;
             this.creatures = new List<Creature>();
@@ -26,9 +29,6 @@ namespace Utrepalo.Core.GameObjects
 
         }
 
-        public void AddCreatures(Creature creature)
-        {
-            this.creatures.Add(creature);
-        }
+        public abstract void AddCreatures(Creature creature);
     }
 }
