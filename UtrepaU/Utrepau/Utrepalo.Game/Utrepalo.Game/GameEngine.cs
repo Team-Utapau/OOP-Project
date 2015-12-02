@@ -7,31 +7,12 @@ using Utrepalo.Game.Interfaces;
 
 namespace Utrepalo.Game
 {
+    using System;
+    using FuncWorks.XNA.XTiled;
+
     public class GameEngine : Microsoft.Xna.Framework.Game
     {
-        enum BState
-        {
-            HOVER,
-            UP,
-            DOWN
-        }
-
-        private const int NUMBER_OF_BUTTONS = 2,
-            login = 0,
-            register = 1,
-            BUTTON_HEIGHT = 100,
-            BUTTON_WIDTH = 150;
-
-        Color background_color;
-        Color[] button_color = new Color[NUMBER_OF_BUTTONS];
-        Rectangle[] button_rectangle = new Rectangle[NUMBER_OF_BUTTONS];
-        BState[] button_state = new BState[NUMBER_OF_BUTTONS];
-        Texture2D[] button_texture = new Texture2D[NUMBER_OF_BUTTONS];
-        double[] button_timer = new double[NUMBER_OF_BUTTONS];
-
-        bool mpressed, prev_mpressed = false;
-        int mx, my;
-        double frame_time;
+       
         SpriteBatch spriteBatch;
 
         /// <summary>
@@ -43,6 +24,14 @@ namespace Utrepalo.Game
         private IController controller;
         public static List<GameObject> GameObjects = new List<GameObject>();
         GraphicsDeviceManager graphics;
+        Rectangle mapView;
+        Int32 mapIdx;
+        List<Map> maps;
+
+        Color playerColor;
+
+        double actionTimer = 0;
+
         public GameEngine(IController controller)
             : base()
         {
@@ -53,35 +42,26 @@ namespace Utrepalo.Game
 
         protected override void Initialize()
         {
-            int x = Window.ClientBounds.Width / 2 - BUTTON_WIDTH / 2;
-            int y = Window.ClientBounds.Height / 2 -
-                NUMBER_OF_BUTTONS / 2 * BUTTON_HEIGHT -
-                (NUMBER_OF_BUTTONS % 2) * BUTTON_HEIGHT / 2;
-            for (int i = 0; i < NUMBER_OF_BUTTONS; i++)
-            {
-                button_state[i] = BState.UP;
-                button_color[i] = Color.White;
-                button_timer[i] = 0.0;
-                button_rectangle[i] = new Rectangle(x, y, BUTTON_WIDTH, BUTTON_HEIGHT);
-                y += BUTTON_HEIGHT;
-            }
-            IsMouseVisible = true;
-            background_color = Color.CornflowerBlue;
 
             base.Initialize();
+            mapView = graphics.GraphicsDevice.Viewport.Bounds;
+            mapView.X = 0;
+            mapView.Y = 0;
+
+       
         }
 
         protected override void LoadContent()
         {
+            spriteBatch = new SpriteBatch(graphics.GraphicsDevice);
+            Map.InitObjectDrawing(graphics.GraphicsDevice);
 
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-            //mainCharRight = Content.Load<Texture2D>("rightMainChar");
-            // TODO: use this.Content to load your game content here
-            button_texture[login] =
-             Content.Load<Texture2D>(@"images/download");
-            button_texture[register] =
-                Content.Load<Texture2D>(@"images/register_now");
+            maps = new List<Map>();
+
+            maps.Add(Content.Load<Map>("Map/Map"));
+
+
+            mapIdx = 0;
         }
         protected override void UnloadContent()
         {
@@ -99,14 +79,60 @@ namespace Utrepalo.Game
         }
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(background_color);
-            spriteBatch.Begin();
-            for (int i = 0; i < NUMBER_OF_BUTTONS; i++)
+            GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            // sewers map needs blendstate to look correct with alphas
+            if (mapIdx == 8)
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied);
+            else
+                spriteBatch.Begin();
+
+            if (mapIdx == 11)
+                DrawLayersInOrder(maps[mapIdx], spriteBatch, mapView);
+            else
             {
-                spriteBatch.Draw(button_texture[i], button_rectangle[i], button_color[i]);
+                maps[mapIdx].Draw(spriteBatch, mapView);
+
+                // draw object layers test
+                for (int ol = 0; ol < maps[mapIdx].ObjectLayers.Count; ol++)
+                    maps[mapIdx].DrawObjectLayer(spriteBatch, ol, mapView, 0);
+
+                // draw image layers test
+                for (int il = 0; il < maps[mapIdx].ImageLayers.Count; il++)
+                    maps[mapIdx].DrawImageLayer(spriteBatch, il, mapView, 0);
             }
+
+            // draw player
+            
+
             spriteBatch.End();
+
             base.Draw(gameTime);
+        }
+        private void DrawLayersInOrder(Map map, SpriteBatch spriteBatch, Rectangle viewport)
+        {
+            float layerDepth = 1.0f;
+            float layerDepthDec = 1.0f / (float)map.LayerOrder.Length;
+
+            foreach (var layer in map.LayerOrder)
+            {
+                switch (layer.LayerType)
+                {
+                    case LayerType.TileLayer:
+                        map.DrawLayer(spriteBatch, layer.ID, viewport, layerDepth);
+                        break;
+
+                    case LayerType.ObjectLayer:
+                        map.DrawObjectLayer(spriteBatch, layer.ID, viewport, layerDepth);
+                        break;
+
+                    case LayerType.ImageLayer:
+                        map.DrawImageLayer(spriteBatch, layer.ID, viewport, layerDepth);
+                        break;
+                }
+
+                layerDepth -= layerDepthDec;
+            }
         }
     }
 }

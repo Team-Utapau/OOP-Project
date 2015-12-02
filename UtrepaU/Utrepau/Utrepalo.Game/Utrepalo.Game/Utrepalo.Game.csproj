@@ -101,6 +101,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\coldacid-xtiled-3678db9d9273\XTiled\XTiled [Windows].csproj">
+      <Project>{b2fdf76b-253a-4d65-a622-712dac4bd2b2}</Project>
+      <Name>XTiled [Windows]</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Utrepalo.GameContent\Utrepalo.GameContent.contentproj">
       <Name>Utrepalo.GameContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>
