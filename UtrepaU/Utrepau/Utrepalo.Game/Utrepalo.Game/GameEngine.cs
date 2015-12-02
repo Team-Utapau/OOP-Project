@@ -16,7 +16,7 @@ namespace Utrepalo.Game
         SpriteBatch spriteBatch;
         public const int Offset = 25;
         public const int WindowsHeight = 700;
-        public const int WindowsWidth = 1200;
+        public const int WindowsWidth = 845;
         private IController controller;
         public static List<GameObject> GameObjects = new List<GameObject>();
         GraphicsDeviceManager graphics;
@@ -40,12 +40,11 @@ namespace Utrepalo.Game
 
         protected override void Initialize()
         {
-
             base.Initialize();
             mapView = graphics.GraphicsDevice.Viewport.Bounds;
             mapView.X = 0;
             mapView.Y = 0;
-            mapView.Height = WindowsHeight;
+            mapView.Height = WindowsHeight + 290;
             mapView.Width = WindowsWidth;
 
             player = maps[mapIdx].SourceTiles[0].Source;
@@ -93,6 +92,7 @@ namespace Utrepalo.Game
 
             if (maps[mapIdx].Bounds.Contains(delta))
             {
+
                 player.X += delta.X - mapView.X;
                 player.Y += delta.Y - mapView.Y;
                 mapView.X = delta.X;
@@ -113,7 +113,7 @@ namespace Utrepalo.Game
             else
                 spriteBatch.Begin();
 
-            if (mapIdx == 11)
+            if (mapIdx == 10)
                 DrawLayersInOrder(maps[mapIdx], spriteBatch, mapView);
             else
             {
