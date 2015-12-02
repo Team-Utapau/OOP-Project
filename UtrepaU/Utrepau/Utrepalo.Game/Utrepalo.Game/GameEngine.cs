@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -12,15 +14,47 @@ namespace Utrepalo.Game
 
     public class GameEngine : Microsoft.Xna.Framework.Game
     {
+<<<<<<< HEAD
        
+=======
+        enum BState
+        {
+            HOVER,
+            UP,
+            DOWN
+        }
+
+        private const int NUMBER_OF_BUTTONS = 2,
+            login = 0,
+            register = 1,
+            BUTTON_HEIGHT = 100,
+            BUTTON_WIDTH = 150;
+
+        Color background_color;
+        Color[] button_color = new Color[NUMBER_OF_BUTTONS];
+        Rectangle[] button_rectangle = new Rectangle[NUMBER_OF_BUTTONS];
+        BState[] button_state = new BState[NUMBER_OF_BUTTONS];
+        Texture2D[] button_texture = new Texture2D[NUMBER_OF_BUTTONS];
+        double[] button_timer = new double[NUMBER_OF_BUTTONS];
+
+        // test
+        Texture2D ball;
+
+        bool mpressed, prev_mpressed = false;
+        int mx, my;
+        double frame_time;
+>>>>>>> 07181ee7111bad5ccb447d8d72d1cce6687c834d
         SpriteBatch spriteBatch;
 
         /// <summary>
         /// ////////////////////////
         /// </summary>
         public const int Offset = 25;
-        public const int WindowsHeight = 400;
-        public const int WindowsWidth = 400;
+        public const int WindowsHeight = 600;
+        public const int WindowsWidth = 1024;
+
+        public static SpriteFont Font;
+
         private IController controller;
         public static List<GameObject> GameObjects = new List<GameObject>();
         GraphicsDeviceManager graphics;
@@ -53,6 +87,7 @@ namespace Utrepalo.Game
 
         protected override void LoadContent()
         {
+<<<<<<< HEAD
             spriteBatch = new SpriteBatch(graphics.GraphicsDevice);
             Map.InitObjectDrawing(graphics.GraphicsDevice);
 
@@ -62,6 +97,24 @@ namespace Utrepalo.Game
 
 
             mapIdx = 0;
+=======
+            // Create a new SpriteBatch, which can be used to draw textures.
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+            this.graphics.PreferredBackBufferWidth = WindowsWidth;
+            this.graphics.PreferredBackBufferHeight = WindowsHeight;
+            this.graphics.ApplyChanges();
+
+            Font = this.Content.Load<SpriteFont>(@"Fonts/ArialFont");
+            //this.gamePauseFont = this.Content.Load<SpriteFont>("Graphics/Fonts/GamePauseFont");
+            ball = this.Content.Load<Texture2D>(@"images/ball-resize");
+
+            //mainCharRight = Content.Load<Texture2D>("rightMainChar");
+            // TODO: use this.Content to load your game content here
+            button_texture[login] =
+             Content.Load<Texture2D>(@"images/download");
+            button_texture[register] =
+                Content.Load<Texture2D>(@"images/register_now");
+>>>>>>> 07181ee7111bad5ccb447d8d72d1cce6687c834d
         }
         protected override void UnloadContent()
         {
@@ -102,8 +155,20 @@ namespace Utrepalo.Game
                     maps[mapIdx].DrawImageLayer(spriteBatch, il, mapView, 0);
             }
 
+<<<<<<< HEAD
             // draw player
             
+=======
+            
+            //tradeMark.Append(string.Format("© {0} UTAPAU GAMES", DateTime.Now.Year));
+            spriteBatch.DrawString(Font, "UTAPAU GAMES", new Vector2(0, 250), Color.Brown);
+
+            spriteBatch.Draw(this.ball, Vector2.Zero, Color.Brown);
+            for (int i = 0; i < 32; i++)
+            {
+                spriteBatch.Draw(this.ball, new Vector2(i * 32, 0), Color.Brown);
+            }
+>>>>>>> 07181ee7111bad5ccb447d8d72d1cce6687c834d
 
             spriteBatch.End();
 
