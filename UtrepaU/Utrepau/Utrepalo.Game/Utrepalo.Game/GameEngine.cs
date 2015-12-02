@@ -19,8 +19,8 @@ namespace Utrepalo.Game
         /// ////////////////////////
         /// </summary>
         public const int Offset = 25;
-        public const int WindowsHeight = 400;
-        public const int WindowsWidth = 400;
+        public const int WindowsHeight = 700;
+        public const int WindowsWidth = 1200;
         private IController controller;
         public static List<GameObject> GameObjects = new List<GameObject>();
         GraphicsDeviceManager graphics;
@@ -38,6 +38,8 @@ namespace Utrepalo.Game
             this.graphics = new GraphicsDeviceManager(this);
             this.controller = controller;
             Content.RootDirectory = "Content";
+            this.graphics.PreferredBackBufferHeight = WindowsHeight;
+            this.graphics.PreferredBackBufferWidth = WindowsWidth;
         }
 
         protected override void Initialize()
@@ -47,6 +49,8 @@ namespace Utrepalo.Game
             mapView = graphics.GraphicsDevice.Viewport.Bounds;
             mapView.X = 0;
             mapView.Y = 0;
+            mapView.Height = WindowsHeight;
+            mapView.Width = WindowsWidth;
 
        
         }
@@ -58,7 +62,7 @@ namespace Utrepalo.Game
 
             maps = new List<Map>();
 
-            maps.Add(Content.Load<Map>("Map/test"));
+            maps.Add(Content.Load<Map>("Map/NewMap"));
 
 
             mapIdx = 0;

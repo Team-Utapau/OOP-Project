@@ -43,14 +43,6 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <Compile Include="Map\test.tmx">
-      <Name>test</Name>
-      <Importer>TMXContentImporter</Importer>
-      <Processor>TMXContentProcessor</Processor>
-    </Compile>
-  </ItemGroup>
   <ItemGroup>
     <Compile Include="Map\background.jpg">
       <Name>background</Name>
@@ -68,6 +60,20 @@
       <Project>{ac3fae00-c94c-4fe3-969f-232241195224}</Project>
       <Name>XTiledExtensions</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Map\m1fpuUr.jpg">
+      <Name>m1fpuUr</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Map\NewMap.tmx">
+      <Name>NewMap</Name>
+      <Importer>TMXContentImporter</Importer>
+      <Processor>TMXContentProcessor</Processor>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 
