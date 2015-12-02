@@ -14,10 +14,6 @@ namespace Utrepalo.Game
     {
        
         SpriteBatch spriteBatch;
-
-        /// <summary>
-        /// ////////////////////////
-        /// </summary>
         public const int Offset = 25;
         public const int WindowsHeight = 700;
         public const int WindowsWidth = 1200;
@@ -27,8 +23,8 @@ namespace Utrepalo.Game
         Rectangle mapView;
         Int32 mapIdx;
         List<Map> maps;
-
-        Color playerColor;
+        Rectangle player;
+        Texture2D playerSprite;
 
         double actionTimer = 0;
 
@@ -52,7 +48,9 @@ namespace Utrepalo.Game
             mapView.Height = WindowsHeight;
             mapView.Width = WindowsWidth;
 
-       
+            player = maps[mapIdx].SourceTiles[0].Source;
+
+
         }
 
         protected override void LoadContent()
@@ -63,6 +61,7 @@ namespace Utrepalo.Game
             maps = new List<Map>();
 
             maps.Add(Content.Load<Map>("Map/NewMap"));
+            playerSprite = Content.Load<Texture2D>("images/dot");
 
 
             mapIdx = 0;
@@ -77,7 +76,30 @@ namespace Utrepalo.Game
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            // TODO: Add your update logic here
+            KeyboardState keys = Keyboard.GetState();
+
+            if (keys.IsKeyDown(Keys.Escape))
+                this.Exit();
+
+            Rectangle delta = mapView;
+            if (keys.IsKeyDown(Keys.Down))
+                delta.Y +=1;
+            if (keys.IsKeyDown(Keys.Up))
+                delta.Y -= 1;
+            if (keys.IsKeyDown(Keys.Right))
+                delta.X += 1;
+            if (keys.IsKeyDown(Keys.Left))
+                delta.X -= 1;
+
+            if (maps[mapIdx].Bounds.Contains(delta))
+            {
+                player.X += delta.X - mapView.X;
+                player.Y += delta.Y - mapView.Y;
+                mapView.X = delta.X;
+                mapView.Y = delta.Y;
+            }
+
+          
 
             base.Update(gameTime);
         }
@@ -106,10 +128,12 @@ namespace Utrepalo.Game
                     maps[mapIdx].DrawImageLayer(spriteBatch, il, mapView, 0);
             }
 
-            // draw player
-            
 
             spriteBatch.End();
+            spriteBatch.Begin();
+            spriteBatch.Draw(playerSprite, player, Color.White);
+            spriteBatch.End();
+
 
             base.Draw(gameTime);
         }
