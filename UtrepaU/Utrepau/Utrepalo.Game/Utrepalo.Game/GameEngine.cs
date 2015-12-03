@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -12,27 +13,28 @@ namespace Utrepalo.Game
 
     public class GameEngine : Microsoft.Xna.Framework.Game
     {
-       
+
         SpriteBatch spriteBatch;
         public const int Offset = 25;
         public const int WindowsHeight = 700;
         public const int WindowsWidth = 845;
-        private IController controller;
         public static List<GameObject> GameObjects = new List<GameObject>();
         GraphicsDeviceManager graphics;
         Rectangle mapView;
         Int32 mapIdx;
         List<Map> maps;
-        Rectangle player;
         Texture2D playerSprite;
-
+        Rectangle sourceRect;
+        Rectangle destRect;
+        float elapsed;
+        float delay = 200;
+        private int frames = 0;
         double actionTimer = 0;
 
         public GameEngine(IController controller)
             : base()
         {
             this.graphics = new GraphicsDeviceManager(this);
-            this.controller = controller;
             Content.RootDirectory = "Content";
             this.graphics.PreferredBackBufferHeight = WindowsHeight;
             this.graphics.PreferredBackBufferWidth = WindowsWidth;
@@ -40,16 +42,13 @@ namespace Utrepalo.Game
 
         protected override void Initialize()
         {
+            destRect = new Rectangle(0, 0, 44, 46);
             base.Initialize();
             mapView = graphics.GraphicsDevice.Viewport.Bounds;
             mapView.X = 0;
             mapView.Y = 0;
             mapView.Height = WindowsHeight + 290;
             mapView.Width = WindowsWidth;
-
-            player = maps[mapIdx].SourceTiles[0].Source;
-
-
         }
 
         protected override void LoadContent()
@@ -60,7 +59,7 @@ namespace Utrepalo.Game
             maps = new List<Map>();
 
             maps.Add(Content.Load<Map>("Map/NewMap"));
-            playerSprite = Content.Load<Texture2D>("images/dot");
+            playerSprite = Content.Load<Texture2D>("images/walkingDownSprite");
 
 
             mapIdx = 0;
@@ -75,6 +74,7 @@ namespace Utrepalo.Game
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
+            sourceRect = new Rectangle(48 * frames, 0, 44, 46);
             KeyboardState keys = Keyboard.GetState();
 
             if (keys.IsKeyDown(Keys.Escape))
@@ -82,27 +82,73 @@ namespace Utrepalo.Game
 
             Rectangle delta = mapView;
             if (keys.IsKeyDown(Keys.Down))
-                delta.Y +=10;
+                delta.Y +=1;
             if (keys.IsKeyDown(Keys.Up))
-                delta.Y -= 10;
+                delta.Y -= 1;
             if (keys.IsKeyDown(Keys.Right))
-                delta.X += 10;
+                delta.X += 1;
+
             if (keys.IsKeyDown(Keys.Left))
-                delta.X -= 10;
+                delta.X -= 1;
+            {
+                MoveSprite(gameTime);
+                playerSprite = Content.Load<Texture2D>("images/walkingDownSprite");
+
+            }
+            if (keys.IsKeyDown(Keys.Up))
+            {
+                MoveSprite(gameTime);
+                playerSprite = Content.Load<Texture2D>("images/walkingUpSprite");
+            }
+
+            if (keys.IsKeyDown(Keys.Right))
+            {
+                MoveSprite(gameTime);
+                playerSprite = Content.Load<Texture2D>("images/walkingRightSprite");
+            }
+
+            if (keys.IsKeyDown(Keys.Left))
+            {
+                MoveSprite(gameTime);
+                playerSprite = Content.Load<Texture2D>("images/walkingLeftSprite");
+            }
+            if (keys.GetPressedKeys().Count() == 0)
+            {
+                frames = 0;
+            }
+            
 
             if (maps[mapIdx].Bounds.Contains(delta))
             {
 
-                player.X += delta.X - mapView.X;
-                player.Y += delta.Y - mapView.Y;
+                destRect.X += delta.X - mapView.X;
+                destRect.Y += delta.Y - mapView.Y;
                 mapView.X = delta.X;
                 mapView.Y = delta.Y;
             }
 
-          
+
 
             base.Update(gameTime);
         }
+
+        private void MoveSprite(GameTime gameTime)
+        {
+            elapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            if (elapsed >= delay)
+            {
+                if (frames >= 7)
+                {
+                    frames = 0;
+                }
+                else
+                {
+                    frames++;
+                }
+                elapsed = 0;
+            }
+        }
+
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
@@ -131,7 +177,8 @@ namespace Utrepalo.Game
 
             spriteBatch.End();
             spriteBatch.Begin();
-            spriteBatch.Draw(playerSprite, player, Color.White);
+
+            spriteBatch.Draw(playerSprite, destRect, sourceRect, Color.White);
             spriteBatch.End();
 
 
