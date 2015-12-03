@@ -82,13 +82,13 @@ namespace Utrepalo.Game
 
             Rectangle delta = mapView;
             if (keys.IsKeyDown(Keys.Down))
-                delta.Y +=1;
+                delta.Y +=10;
             if (keys.IsKeyDown(Keys.Up))
-                delta.Y -= 1;
+                delta.Y -= 10;
             if (keys.IsKeyDown(Keys.Right))
-                delta.X += 1;
+                delta.X += 10;
             if (keys.IsKeyDown(Keys.Left))
-                delta.X -= 1;
+                delta.X -= 10;
 
             if (maps[mapIdx].Bounds.Contains(delta))
             {
