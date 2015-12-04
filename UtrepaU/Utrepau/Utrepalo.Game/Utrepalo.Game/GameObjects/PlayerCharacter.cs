@@ -17,14 +17,14 @@ namespace Utrepalo.Game.GameObjects
         public float delay = 200;
         public int frames = 0;
         double actionTimer = 0;
-        public PlayerCharacter(Texture2D objTexture,Rectangle rectangle,SpriteBatch spriteBatch,string name,int level)
-            :base(objTexture,rectangle,spriteBatch,name)
+        public PlayerCharacter(Texture2D objTexture, Rectangle rectangle, SpriteBatch spriteBatch, string name, int level)
+            : base(objTexture, rectangle, spriteBatch, name)
         {
             this.Gold = gold;
             this.Lifes = lifes;
 
         }
-        public int Gold  { get; set; }
+        public int Gold { get; set; }
         public int Lifes { get; set; }
 
         public override void Update()
@@ -78,52 +78,40 @@ namespace Utrepalo.Game.GameObjects
                 elapsed = 0;
             }
         }
-        public void PlayerMoveState(GameTime gameTime, KeyboardState keys,Rectangle mapView,ContentManager Content,
-            List<Map> maps, int mapIdx,Rectangle destRect)
+        public void PlayerMoveState(GameTime gameTime, KeyboardState keys, Rectangle mapView, ContentManager Content,
+            List<Map> maps, int mapIdx, Rectangle destRect)
         {
 
             Rectangle delta = mapView;
             if (keys.IsKeyDown(Keys.Down))
             {
-                
+                delta.Y -= 1;
                 MoveSprite(gameTime);
                 this.MoveDown(Content);
             }
-                
+
             if (keys.IsKeyDown(Keys.Up))
+            {
+                MoveSprite(gameTime);
+                this.MoveUp(Content);
                 delta.Y -= 1;
+            }
             if (keys.IsKeyDown(Keys.Right))
+            {
+                MoveSprite(gameTime);
+                this.MoveRight(Content);
                 delta.X += 1;
-
+            }
             if (keys.IsKeyDown(Keys.Left))
+            {
+                MoveSprite(gameTime);
+                this.MoveLeft(Content);
                 delta.X -= 1;
-            {
-                MoveSprite(gameTime);
-                MoveDown(Content);
-            }
-            if (keys.IsKeyDown(Keys.Up))
-            {
-                MoveSprite(gameTime);
-                MoveUp(Content);
-            }
-
-            if (keys.IsKeyDown(Keys.Right))
-            {
-                MoveSprite(gameTime);
-                MoveRight(Content);
-            }
-
-            if (keys.IsKeyDown(Keys.Left))
-            {
-                MoveSprite(gameTime);
-                MoveLeft(Content);
             }
             if (keys.GetPressedKeys().Count() == 0)
             {
                 frames = 0;
             }
-
-
             if (maps[mapIdx].Bounds.Contains(delta))
             {
                 destRect.X += delta.X - mapView.X;
@@ -134,3 +122,4 @@ namespace Utrepalo.Game.GameObjects
         }
     }
 }
+
