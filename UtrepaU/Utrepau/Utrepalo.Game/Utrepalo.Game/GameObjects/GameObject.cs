@@ -14,11 +14,25 @@ namespace Utrepalo.Game.GameObjects
     {
         protected Texture2D objTexture;
         protected Rectangle rectangle;
+        protected SpriteBatch spriteBatch;
 
-        protected GameObject(Texture2D objTexture, Rectangle rectangle)
+        protected GameObject(Texture2D objTexture, Rectangle rectangle, SpriteBatch spriteBatch)
         {
-            this.objTexture = objTexture;
+            this.ObjTexture = objTexture;
             this.rectangle = rectangle;
+            this.spriteBatch = spriteBatch;
+        }
+
+        public Texture2D ObjTexture
+        {
+            get { return this.objTexture; }
+            set { this.objTexture = value; }
+        }
+
+        public SpriteBatch SpriteBatch
+        {
+            get { return this.spriteBatch; }
+            set { this.spriteBatch = value; }
         }
 
         public Rectangle Rectangle

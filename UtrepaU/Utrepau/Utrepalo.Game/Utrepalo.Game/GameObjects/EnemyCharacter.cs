@@ -8,8 +8,8 @@ namespace Utrepalo.Game.GameObjects
     public class EnemyCharacter : Character
     {
         private int level;
-        public EnemyCharacter(Texture2D objTexture,Rectangle rectangle,string name,int level)
-            :base(objTexture,rectangle,name)
+        public EnemyCharacter(Texture2D objTexture,Rectangle rectangle, SpriteBatch spriteBatch,string name,int level)
+            :base(objTexture,rectangle,spriteBatch,name)
         {
             this.Level = level;
         }

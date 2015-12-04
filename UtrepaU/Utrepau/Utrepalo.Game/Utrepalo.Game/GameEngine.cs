@@ -31,6 +31,8 @@ namespace Utrepalo.Game
         private int frames = 0;
         double actionTimer = 0;
 
+         PlayerCharacter player;
+
         public GameEngine(IController controller)
             : base()
         {
@@ -43,6 +45,7 @@ namespace Utrepalo.Game
         protected override void Initialize()
         {
             destRect = new Rectangle(0, 0, 44, 46);
+            player = new PlayerCharacter(playerSprite, destRect, spriteBatch, "Gosho", 2);
             base.Initialize();
             mapView = graphics.GraphicsDevice.Viewport.Bounds;
             mapView.X = 0;
@@ -59,7 +62,7 @@ namespace Utrepalo.Game
             maps = new List<Map>();
 
             maps.Add(Content.Load<Map>("Map/NewMap"));
-            playerSprite = Content.Load<Texture2D>("images/walkingDownSprite");
+            player.ObjTexture = Content.Load<Texture2D>("images/walkingDownSprite");
 
 
             mapIdx = 0;
@@ -73,7 +76,7 @@ namespace Utrepalo.Game
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-
+            
             sourceRect = new Rectangle(48 * frames, 0, 44, 46);
             KeyboardState keys = Keyboard.GetState();
 
@@ -85,26 +88,26 @@ namespace Utrepalo.Game
             {
                 delta.Y += 1;
                 MoveSprite(gameTime);
-                playerSprite = Content.Load<Texture2D>("images/walkingDownSprite");
+               player.MoveDown(this.Content);
             }
 
             if (keys.IsKeyDown(Keys.Up))
             {
                 delta.Y -= 1;
                 MoveSprite(gameTime);
-                playerSprite = Content.Load<Texture2D>("images/walkingUpSprite");
+                player.MoveUp(this.Content);
             }
 
             if (keys.IsKeyDown(Keys.Right))
             {
                 MoveSprite(gameTime);
-                playerSprite = Content.Load<Texture2D>("images/walkingRightSprite");
+                player.MoveRight(this.Content);
                 delta.X += 1;
             }
             if (keys.IsKeyDown(Keys.Left))
             {
                 MoveSprite(gameTime);
-                playerSprite = Content.Load<Texture2D>("images/walkingLeftSprite");
+                player.MoveLeft(this.Content);
                 delta.X -= 1;
             }
             if (keys.GetPressedKeys().Count() == 0)
@@ -170,7 +173,7 @@ namespace Utrepalo.Game
             spriteBatch.End();
             spriteBatch.Begin();
 
-            spriteBatch.Draw(playerSprite, destRect, sourceRect, Color.White);
+            spriteBatch.Draw(player.ObjTexture, destRect, sourceRect, Color.White);
             spriteBatch.End();
 
 

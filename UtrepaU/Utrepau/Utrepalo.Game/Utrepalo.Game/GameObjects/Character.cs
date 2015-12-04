@@ -15,8 +15,8 @@ namespace Utrepalo.Game.GameObjects
         private List<Creature> creatures;
         private string name;
         
-        public Character(Texture2D objTexture,Rectangle rectangle,string name)
-            :base(objTexture,rectangle)
+        public Character(Texture2D objTexture,Rectangle rectangle,SpriteBatch spriteBatch,string name)
+            :base(objTexture,rectangle,spriteBatch)
         {
             this.Name = name;
             this.creatures = new List<Creature>();

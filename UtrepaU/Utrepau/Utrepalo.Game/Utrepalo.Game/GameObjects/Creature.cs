@@ -15,8 +15,8 @@ namespace Utrepalo.Game.GameObjects
         private int damage;
         private int armor;
         private bool isEnemy;
-        public Creature(Texture2D objTexture,Rectangle rectangle,int resources, int health, int damage, int armor,bool isEnemy)
-            :base(objTexture,rectangle)
+        public Creature(Texture2D objTexture,Rectangle rectangle,SpriteBatch spriteBatch,int resources, int health, int damage, int armor,bool isEnemy)
+            :base(objTexture,rectangle,spriteBatch)
         {
             this.Resourse = resources;
             this.Health = health;
