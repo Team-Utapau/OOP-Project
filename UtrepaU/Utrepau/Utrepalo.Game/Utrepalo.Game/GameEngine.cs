@@ -26,12 +26,13 @@ namespace Utrepalo.Game
         Texture2D playerSprite;
         Rectangle sourceRect;
         Rectangle destRect;
-        float elapsed;
-        float delay = 200;
-        private int frames = 0;
-        double actionTimer = 0;
+         float elapsed;
+         double delay = 200;
+         int frames = 0;
+        public double actionTimer = 0;
 
-         PlayerCharacter player;
+        PlayerCharacter player;
+
 
         public GameEngine(IController controller)
             : base()
@@ -52,6 +53,7 @@ namespace Utrepalo.Game
             mapView.Y = 0;
             mapView.Height = WindowsHeight + 290;
             mapView.Width = WindowsWidth;
+            
         }
 
         protected override void LoadContent()
@@ -60,7 +62,6 @@ namespace Utrepalo.Game
             Map.InitObjectDrawing(graphics.GraphicsDevice);
 
             maps = new List<Map>();
-
             maps.Add(Content.Load<Map>("Map/NewMap"));
             player.ObjTexture = Content.Load<Texture2D>("images/walkingDownSprite");
 
@@ -76,7 +77,7 @@ namespace Utrepalo.Game
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-            
+                      
             sourceRect = new Rectangle(48 * frames, 0, 44, 46);
             KeyboardState keys = Keyboard.GetState();
 
@@ -129,7 +130,7 @@ namespace Utrepalo.Game
 
         private void MoveSprite(GameTime gameTime)
         {
-            elapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            elapsed += (float) gameTime.ElapsedGameTime.TotalMilliseconds;
             if (elapsed >= delay)
             {
                 if (frames >= 7)
