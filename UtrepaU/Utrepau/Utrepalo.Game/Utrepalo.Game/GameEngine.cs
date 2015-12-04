@@ -82,21 +82,15 @@ namespace Utrepalo.Game
 
             Rectangle delta = mapView;
             if (keys.IsKeyDown(Keys.Down))
-                delta.Y +=1;
-            if (keys.IsKeyDown(Keys.Up))
-                delta.Y -= 1;
-            if (keys.IsKeyDown(Keys.Right))
-                delta.X += 1;
-
-            if (keys.IsKeyDown(Keys.Left))
-                delta.X -= 1;
             {
+                delta.Y += 1;
                 MoveSprite(gameTime);
                 playerSprite = Content.Load<Texture2D>("images/walkingDownSprite");
-
             }
+
             if (keys.IsKeyDown(Keys.Up))
             {
+                delta.Y -= 1;
                 MoveSprite(gameTime);
                 playerSprite = Content.Load<Texture2D>("images/walkingUpSprite");
             }
@@ -105,18 +99,19 @@ namespace Utrepalo.Game
             {
                 MoveSprite(gameTime);
                 playerSprite = Content.Load<Texture2D>("images/walkingRightSprite");
+                delta.X += 1;
             }
-
             if (keys.IsKeyDown(Keys.Left))
             {
                 MoveSprite(gameTime);
                 playerSprite = Content.Load<Texture2D>("images/walkingLeftSprite");
+                delta.X -= 1;
             }
             if (keys.GetPressedKeys().Count() == 0)
             {
                 frames = 0;
             }
-            
+
 
             if (maps[mapIdx].Bounds.Contains(delta))
             {
@@ -126,9 +121,6 @@ namespace Utrepalo.Game
                 mapView.X = delta.X;
                 mapView.Y = delta.Y;
             }
-
-
-
             base.Update(gameTime);
         }
 
