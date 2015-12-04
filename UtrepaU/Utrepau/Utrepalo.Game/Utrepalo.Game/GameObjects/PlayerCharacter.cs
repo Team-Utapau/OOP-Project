@@ -103,7 +103,8 @@ namespace Utrepalo.Game.GameObjects
             }
             if (keys.IsKeyDown(Keys.Up))
             {
-                
+                MoveSprite(gameTime);
+                MoveUp(Content);
             }
 
             if (keys.IsKeyDown(Keys.Right))
