@@ -26,10 +26,12 @@ namespace Utrepalo.Game
         Texture2D playerSprite;
         Rectangle sourceRect;
         Rectangle destRect;
-        float elapsed;
-        float delay = 200;
-        private int frames = 0;
-        double actionTimer = 0;
+         float elapsed;
+         double delay = 200;
+         int frames = 0;
+        public double actionTimer = 0;
+
+        PlayerCharacter player;
 
         public GameEngine(IController controller)
             : base()
@@ -49,6 +51,7 @@ namespace Utrepalo.Game
             mapView.Y = 0;
             mapView.Height = WindowsHeight + 290;
             mapView.Width = WindowsWidth;
+            
         }
 
         protected override void LoadContent()
@@ -57,9 +60,9 @@ namespace Utrepalo.Game
             Map.InitObjectDrawing(graphics.GraphicsDevice);
 
             maps = new List<Map>();
-
+            player = new PlayerCharacter(playerSprite,destRect,spriteBatch,"gosho",2);
             maps.Add(Content.Load<Map>("Map/NewMap"));
-            playerSprite = Content.Load<Texture2D>("images/walkingDownSprite");
+            player.ObjTexture = Content.Load<Texture2D>("images/walkingDownSprite");
 
 
             mapIdx = 0;
@@ -74,80 +77,17 @@ namespace Utrepalo.Game
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            sourceRect = new Rectangle(48 * frames, 0, 44, 46);
+            sourceRect = new Rectangle(48 * player.frames, 0, 44, 46);
             KeyboardState keys = Keyboard.GetState();
 
-            if (keys.IsKeyDown(Keys.Escape))
-                this.Exit();
-
-            Rectangle delta = mapView;
-            if (keys.IsKeyDown(Keys.Down))
-                delta.Y +=1;
-            if (keys.IsKeyDown(Keys.Up))
-                delta.Y -= 1;
-            if (keys.IsKeyDown(Keys.Right))
-                delta.X += 1;
-
-            if (keys.IsKeyDown(Keys.Left))
-                delta.X -= 1;
-            {
-                MoveSprite(gameTime);
-                playerSprite = Content.Load<Texture2D>("images/walkingDownSprite");
-
-            }
-            if (keys.IsKeyDown(Keys.Up))
-            {
-                MoveSprite(gameTime);
-                playerSprite = Content.Load<Texture2D>("images/walkingUpSprite");
-            }
-
-            if (keys.IsKeyDown(Keys.Right))
-            {
-                MoveSprite(gameTime);
-                playerSprite = Content.Load<Texture2D>("images/walkingRightSprite");
-            }
-
-            if (keys.IsKeyDown(Keys.Left))
-            {
-                MoveSprite(gameTime);
-                playerSprite = Content.Load<Texture2D>("images/walkingLeftSprite");
-            }
-            if (keys.GetPressedKeys().Count() == 0)
-            {
-                frames = 0;
-            }
-            
-
-            if (maps[mapIdx].Bounds.Contains(delta))
-            {
-
-                destRect.X += delta.X - mapView.X;
-                destRect.Y += delta.Y - mapView.Y;
-                mapView.X = delta.X;
-                mapView.Y = delta.Y;
-            }
-
+            player.PlayerMoveState(gameTime, keys,mapView,Content,maps,mapIdx,destRect);
 
 
             base.Update(gameTime);
         }
 
-        private void MoveSprite(GameTime gameTime)
-        {
-            elapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            if (elapsed >= delay)
-            {
-                if (frames >= 7)
-                {
-                    frames = 0;
-                }
-                else
-                {
-                    frames++;
-                }
-                elapsed = 0;
-            }
-        }
+        
+
 
         protected override void Draw(GameTime gameTime)
         {
@@ -178,7 +118,7 @@ namespace Utrepalo.Game
             spriteBatch.End();
             spriteBatch.Begin();
 
-            spriteBatch.Draw(playerSprite, destRect, sourceRect, Color.White);
+            spriteBatch.Draw(player.ObjTexture, destRect, sourceRect, Color.White);
             spriteBatch.End();
 
 
