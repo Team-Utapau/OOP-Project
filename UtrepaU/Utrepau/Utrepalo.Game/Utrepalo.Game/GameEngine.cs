@@ -80,9 +80,56 @@ namespace Utrepalo.Game
             sourceRect = new Rectangle(48 * player.frames, 0, 44, 46);
             KeyboardState keys = Keyboard.GetState();
 
+<<<<<<< HEAD
             player.PlayerMoveState(gameTime, keys,mapView,Content,maps,mapIdx,destRect);
 
 
+=======
+            if (keys.IsKeyDown(Keys.Escape))
+                this.Exit();
+
+            Rectangle delta = mapView;
+            if (keys.IsKeyDown(Keys.Down))
+            {
+                delta.Y += 1;
+                MoveSprite(gameTime);
+                playerSprite = Content.Load<Texture2D>("images/walkingDownSprite");
+            }
+
+            if (keys.IsKeyDown(Keys.Up))
+            {
+                delta.Y -= 1;
+                MoveSprite(gameTime);
+                playerSprite = Content.Load<Texture2D>("images/walkingUpSprite");
+            }
+
+            if (keys.IsKeyDown(Keys.Right))
+            {
+                MoveSprite(gameTime);
+                playerSprite = Content.Load<Texture2D>("images/walkingRightSprite");
+                delta.X += 1;
+            }
+            if (keys.IsKeyDown(Keys.Left))
+            {
+                MoveSprite(gameTime);
+                playerSprite = Content.Load<Texture2D>("images/walkingLeftSprite");
+                delta.X -= 1;
+            }
+            if (keys.GetPressedKeys().Count() == 0)
+            {
+                frames = 0;
+            }
+
+
+            if (maps[mapIdx].Bounds.Contains(delta))
+            {
+
+                destRect.X += delta.X - mapView.X;
+                destRect.Y += delta.Y - mapView.Y;
+                mapView.X = delta.X;
+                mapView.Y = delta.Y;
+            }
+>>>>>>> ecafa5603987970f53aa158f7b8eb2aca2e91905
             base.Update(gameTime);
         }
 
