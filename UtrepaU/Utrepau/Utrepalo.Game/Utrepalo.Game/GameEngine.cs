@@ -68,6 +68,7 @@ namespace Utrepalo.Game
             
             exitButtonRect = new Rectangle(700, 600, 100, 100);
             exitButton = new ExitButton(exitButtonTexture, exitButtonRect, spriteBatch);
+            var mouse =this.IsMouseVisible = true;
 
             base.Initialize();
         }
@@ -98,6 +99,8 @@ namespace Utrepalo.Game
 
             sourceRect = new Rectangle(48 * frames, 0, 44, 46);
             KeyboardState keys = Keyboard.GetState();
+            MouseState mouse = Mouse.GetState();
+            
 
             if (keys.IsKeyDown(Keys.Escape))
                 this.Exit();
