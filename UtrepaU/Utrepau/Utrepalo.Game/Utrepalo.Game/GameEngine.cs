@@ -1,10 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Utrepalo.Game.GameObjects;
+using Utrepalo.Game.GameObjects.Buttons;
 using Utrepalo.Game.Interfaces;
+using Utrepalo.Game.MenuItem;
+using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
+using Keys = Microsoft.Xna.Framework.Input.Keys;
 
 namespace Utrepalo.Game
 {
@@ -30,6 +35,13 @@ namespace Utrepalo.Game
         double delay = 200;
         int frames = 0;
         public double actionTimer = 0;
+        
+        ExitButton exitButton;
+        Texture2D exitButtonTexture;
+        Rectangle exitButtonRect;
+        Vector2 exitButtonPoss;
+        private Rectangle exitButtonSourceRect;
+
 
         PlayerCharacter player;
 
@@ -47,13 +59,17 @@ namespace Utrepalo.Game
         {
             destRect = new Rectangle(0, 0, 44, 46);
             player = new PlayerCharacter(playerSprite, destRect, spriteBatch, "Gosho", 2);
-            base.Initialize();
+            
             mapView = graphics.GraphicsDevice.Viewport.Bounds;
             mapView.X = 0;
             mapView.Y = 0;
             mapView.Height = WindowsHeight + 290;
             mapView.Width = WindowsWidth;
+            
+            exitButtonRect = new Rectangle(700, 600, 100, 100);
+            exitButton = new ExitButton(exitButtonTexture, exitButtonRect, spriteBatch);
 
+            base.Initialize();
         }
 
         protected override void LoadContent()
@@ -64,7 +80,9 @@ namespace Utrepalo.Game
             maps = new List<Map>();
             maps.Add(Content.Load<Map>("Map/NewMap"));
             player.ObjTexture = Content.Load<Texture2D>("images/walkingDownSprite");
-
+            
+            
+            exitButton.ObjTexture = Content.Load<Texture2D>("images/exit-button2");
 
             mapIdx = 0;
         }
@@ -125,6 +143,10 @@ namespace Utrepalo.Game
                 mapView.X = delta.X;
                 mapView.Y = delta.Y;
             }
+
+
+            exitButtonSourceRect = new Rectangle(0, 0, 100, 100);
+
             base.Update(gameTime);
         }
 
@@ -173,8 +195,11 @@ namespace Utrepalo.Game
 
             spriteBatch.End();
             spriteBatch.Begin();
-
             spriteBatch.Draw(player.ObjTexture, destRect, sourceRect, Color.White);
+            spriteBatch.End();
+            spriteBatch.Begin();
+
+            spriteBatch.Draw(exitButton.ObjTexture, exitButton.Rectangle, exitButtonSourceRect, Color.White);
             spriteBatch.End();
 
 

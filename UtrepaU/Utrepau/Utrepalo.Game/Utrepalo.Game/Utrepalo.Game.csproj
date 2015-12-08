@@ -75,6 +75,7 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameObjects\Buttons\ExitButton.cs" />
     <Compile Include="GameObjects\Enemies\Mage.cs" />
     <Compile Include="GameObjects\Enemies\Paladin.cs" />
     <Compile Include="GameObjects\Enemies\Shaman.cs" />
@@ -94,6 +95,12 @@
     <Compile Include="Interfaces\ITalent.cs" />
     <Compile Include="KeyboardController.cs" />
     <Compile Include="KeyboardHandler\KeyboardController.cs" />
+    <Compile Include="MenuItem\BackButton.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MenuItem\BackButton.Designer.cs">
+      <DependentUpon>BackButton.cs</DependentUpon>
+    </Compile>
     <Compile Include="MenuItem\BackgroundForm.cs">
       <SubType>Form</SubType>
     </Compile>
