@@ -41,33 +41,10 @@ namespace Utrepalo.Game.GameObjects
         public int Gold  { get; set; }
         public int Lifes { get; set; }
 
-        //public IEnumerable<Bullet> Bullets
-        //{
-        //    get { return this.bullets; }
-        //}
-
-        //public void AddBullet(Bullet bullet)
-        //{
-        //    this.bullets.Add(bullet);
-        //}
-
-        //public override void Update()
-        //{
-        //    throw new System.NotImplementedException();
-        //}
-
-        //public override void RespondToCollision(GameObject hitObject)
-        //{
-        //    throw new System.NotImplementedException();
-        //}
-
-        //public override void AddCreatures(Creature creature)
-        //{
-        //    throw new System.NotImplementedException();
-        //}
 
         public void LoadContent(ContentManager content)
         {
+            this.bulletTexture = content.Load<Texture2D>("images/bullet");
             this.objTexture = content.Load<Texture2D>("images/walkingdownsprite");
             //MoveUp(content);
             //MoveDown(content);
@@ -192,7 +169,7 @@ namespace Utrepalo.Game.GameObjects
         public void MoveDown(ContentManager content)
         {
             this.objTexture = content.Load<Texture2D>("images/walkingDownSprite");
-            this.bulletTexture = content.Load<Texture2D>("images/bullet");
+           // this.bulletTexture = content.Load<Texture2D>("images/bullet");
         }
 
         public void MoveLeft(ContentManager content)
