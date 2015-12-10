@@ -6,10 +6,10 @@ namespace Utrepalo.Game.GameObjects.Enemies
 {
     using System.Collections.Generic;
 
-    public class Paladin : Creature
-    {
-        public Paladin(Texture2D objTexture, Rectangle rectangle, SpriteBatch spriteBatch, int resources, int health, int damage, int armor, bool isEnemy) : base(objTexture, rectangle, spriteBatch, resources, health, damage, armor, isEnemy)
-        {
-        }
-    }
+    //public class Paladin : Creature
+    //{
+    //    public Paladin(Texture2D objTexture, Rectangle rectangle, SpriteBatch spriteBatch, int resources, int health, int damage, int armor, bool isEnemy) : base(objTexture, rectangle, spriteBatch, resources, health, damage, armor, isEnemy)
+    //    {
+    //    }
+    //}
 }

@@ -6,6 +6,7 @@ namespace Utrepalo.Game.GameObjects
 {
     using System;
     using System.Collections.Generic;
+    using Game = Microsoft.Xna.Framework.Game;
 
     public abstract class Creature :GameObject, ICreature
     {
@@ -14,16 +15,15 @@ namespace Utrepalo.Game.GameObjects
         private int health;
         private int damage;
         private int armor;
-        private bool isEnemy;
-        public Creature(Texture2D objTexture,Rectangle rectangle,SpriteBatch spriteBatch,int resources, int health, int damage, int armor,bool isEnemy)
-            :base(objTexture,rectangle,spriteBatch)
+
+        public Creature(Texture2D objTexture,Rectangle drowingRectangle,Rectangle sourceRectangle,SpriteBatch spriteBatch,int resources, int health, int damage, int armor,Game game)
+            :base(objTexture,drowingRectangle,sourceRectangle,spriteBatch ,game)
         {
             this.Resourse = resources;
             this.Health = health;
             this.Damage = damage;
             this.Armor = armor;
             this.Upgrades = upgrades;
-            this.IsEnemy = isEnemy;
         }
 
 
@@ -31,7 +31,6 @@ namespace Utrepalo.Game.GameObjects
         public int Health { get; set; }
         public int Damage { get; set; }
         public int Armor { get; set; }
-        public bool IsEnemy { get; set; }
 
         public IEnumerable<Upgrade> Upgrades
         {
@@ -39,19 +38,16 @@ namespace Utrepalo.Game.GameObjects
             set { this.upgrades = value; }
         }
 
-        public virtual void Walk()
-        {
-            throw new NotImplementedException();
-        }
-
         public virtual void Attack()
         {
             throw new NotImplementedException();
         }
-        public override void Update()
+
+        public void Defence()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
+
 
         public override void RespondToCollision(GameObject hitObject)
         {

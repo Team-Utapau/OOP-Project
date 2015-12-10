@@ -2,8 +2,7 @@
 {
     public interface ICreature
     {
-        void Walk();
         void Attack();
-
+        void Defence();
     }
 }

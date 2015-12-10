@@ -29,27 +29,26 @@ namespace Utrepalo.Game
         Rectangle mapView;
         Int32 mapIdx;
         List<Map> maps;
-        Texture2D playerSprite;
-        Rectangle sourceRect;
-        Rectangle destRect;
+
         float elapsed;
         
         int frames = 0;
         public double actionTimer = 0;
 
+        //Button
         ExitButton exitButton;
         Texture2D exitButtonTexture;
         Rectangle exitButtonRect;
-        Vector2 exitButtonPoss;
 
-        Bullet bullet;
-        Rectangle bulletRectangle;
-        Texture2D bulletTexture;
         private Rectangle exitButtonSourceRect;
-        List<Bullet> bullets;
 
 
+        //Player
         PlayerCharacter player;
+        Texture2D playerTexture;
+         Rectangle drowingPlayerRectangle;
+         Rectangle sourcePlayerRectangle;
+
         private float delay = 200;
 
         public GameEngine(IController controller)
@@ -63,8 +62,7 @@ namespace Utrepalo.Game
 
         protected override void Initialize()
         {
-            destRect = new Rectangle(0, 0, 44, 46);
-            player = new PlayerCharacter();
+            player = new PlayerCharacter(playerTexture,drowingPlayerRectangle,sourcePlayerRectangle,spriteBatch,this);
 
 
             mapView = graphics.GraphicsDevice.Viewport.Bounds;
@@ -73,10 +71,9 @@ namespace Utrepalo.Game
             mapView.Height = WindowsHeight + 290;
             mapView.Width = WindowsWidth;
 
-            exitButtonRect = new Rectangle(700, 600, 100, 100);
-            exitButton = new ExitButton(exitButtonTexture, exitButtonRect, spriteBatch);
-            var mouse = this.IsMouseVisible = true;
-            bullet = new Bullet(bulletTexture);
+           // exitButtonRect = new Rectangle(700, 600, 100, 100);
+            exitButton = new ExitButton(exitButtonTexture,exitButtonSourceRect, spriteBatch,this);
+             this.IsMouseVisible = true;
 
             base.Initialize();
         }
@@ -88,10 +85,10 @@ namespace Utrepalo.Game
 
             maps = new List<Map>();
             maps.Add(Content.Load<Map>("Map/NewMap"));
-            //player.objtexture = content.load<texture2d>("images/walkingdownsprite");
-            //bullet.ObjTexture = Content.Load<Texture2D>("images/bullet");
+
             player.LoadContent(Content);
-            exitButton.ObjTexture = Content.Load<Texture2D>("images/exit-button2");
+            exitButton.LoadContent(Content);
+          //  exitButton.ObjTexture = Content.Load<Texture2D>("images/exit-button2");
 
             mapIdx = 0;
         }
@@ -106,7 +103,6 @@ namespace Utrepalo.Game
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            //sourceRect = new Rectangle(48 * frames, 0, 44, 46);
             KeyboardState keys = Keyboard.GetState();
             MouseState mouse = Mouse.GetState();
 
@@ -115,8 +111,6 @@ namespace Utrepalo.Game
                 this.Exit();
 
             player.Update(gameTime);
-
-            //player.MoveSprite(gameTime);
 
             Rectangle delta = mapView;
 
@@ -150,16 +144,15 @@ namespace Utrepalo.Game
                
                 if (maps[mapIdx].Bounds.Contains(delta))
                 {
-
-                    destRect.X += delta.X - mapView.X;
-                    destRect.Y += delta.Y - mapView.Y;
+                    player.position.X += delta.X - mapView.X;
+                    player.position.Y += delta.Y - mapView.Y;
                     mapView.X = delta.X;
                     mapView.Y = delta.Y;
                 }
 
 
-                exitButtonSourceRect = new Rectangle(0, 0, 100, 100);
-
+                //exitButtonSourceRect = new Rectangle(0, 0, 100, 100);
+                exitButton.Update(gameTime);
                 base.Update(gameTime);
             
         }
@@ -194,19 +187,9 @@ namespace Utrepalo.Game
             spriteBatch.Begin();
             player.Draw(spriteBatch);
             spriteBatch.End();
-            //spriteBatch.Draw(player.objTexture, destRect, sourceRect, Color.White);
-            ////player.Draw(spriteBatch);
-            //spriteBatch.End();
-            //spriteBatch.Begin();
-
-            //spriteBatch.Draw(exitButton.ObjTexture, exitButton.Rectangle, exitButtonSourceRect, Color.White);
-            //spriteBatch.End();
-
-            //spriteBatch.Begin();
-            //spriteBatch.Draw(bullet.texture, bulletRectangle, new Rectangle(0, 0, 16, 16), Color.Aqua);
-            ////bullet.Draw(spriteBatch);
-            //spriteBatch.End();
-            
+            spriteBatch.Begin();
+            exitButton.Draw(spriteBatch);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }

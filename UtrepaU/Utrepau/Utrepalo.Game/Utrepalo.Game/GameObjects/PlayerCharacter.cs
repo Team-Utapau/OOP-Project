@@ -6,13 +6,16 @@ namespace Utrepalo.Game.GameObjects
     using System.Collections.Generic;
     using Microsoft.Xna.Framework.Content;
     using Bullets;
+    using Interfaces;
     using Microsoft.Xna.Framework.Input;
+    using System;
+    using Resources;
+    using Game = Microsoft.Xna.Framework.Game;
 
-    public class PlayerCharacter /*: Character*/
+    public class PlayerCharacter : GameObject, IEnhanceable /*: Character*/
     {
-        public Texture2D objTexture;
+
         public Texture2D bulletTexture;
-        public Rectangle sourceRectangle;
         public float bulletDelay;
         public Vector2 position;
         public float elapsed;
@@ -25,36 +28,44 @@ namespace Utrepalo.Game.GameObjects
 
         private int gold;
         private int lifes;
-       
 
-        public PlayerCharacter()
-                              //: base(objTexture, rectangle, spriteBatch, name)
+        public PlayerCharacter(Texture2D objTexture, Rectangle drowingRectangle, Rectangle sourceRectangle, SpriteBatch spriteBatch, Game game) : base(objTexture, drowingRectangle, sourceRectangle, spriteBatch, game)
         {
             this.bullets = new List<Bullet>();
             this.speed = 2;
-            this.bulletDelay =  1f;
+            this.bulletDelay = 1f;
             //this.sourceRectangle = new Rectangle();
 
             this.Gold = gold;
             this.Lifes = lifes;
         }
+
         public int Gold  { get; set; }
         public int Lifes { get; set; }
 
+        public IEnumerable<Resource> Resources
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
 
-        public void LoadContent(ContentManager content)
+        public override void LoadContent(ContentManager content)
         {
             this.bulletTexture = content.Load<Texture2D>("images/bullet");
             this.objTexture = content.Load<Texture2D>("images/walkingdownsprite");
-            //MoveUp(content);
-            //MoveDown(content);
-            //MoveRight(content);
-            //MoveLeft(content);
+
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public override void RespondToCollision(GameObject hitObject)
         {
-            spriteBatch.Draw(objTexture, position, sourceRectangle, Color.White);
+            throw new System.NotImplementedException();
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(objTexture, position, SourceRectangle, Color.White);
             foreach (Bullet bullet in this.bullets)
             {
                 bullet.Draw(spriteBatch);
@@ -90,7 +101,7 @@ namespace Utrepalo.Game.GameObjects
         public void Update(GameTime gameTime)
         {
             var newState = Keyboard.GetState();
-            sourceRectangle = new Rectangle(48 * frame, 0, 44, 46);
+            this.SourceRectangle = new Rectangle(48 * frame, 0, 44, 46);
             KeyboardState keyState = Keyboard.GetState();
             if (keyState.IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space))
             {
@@ -183,5 +194,13 @@ namespace Utrepalo.Game.GameObjects
             this.objTexture = content.Load<Texture2D>("images/walkingRightSprite");
             //this.bulletTexture = content.Load<Texture2D>("images/bullet");
         }
+
+        public void AddResource(Resource resource)
+        {
+            throw new NotImplementedException();
+        }
+
+
+      
     }
 }
