@@ -120,6 +120,7 @@ namespace Utrepalo.Game
 
             player.Update(gameTime);
             creature.Update(gameTime);
+            creature.Updatee(gameTime,mapView.X,mapView.Y);
 
             Rectangle delta = mapView;
 
@@ -158,18 +159,14 @@ namespace Utrepalo.Game
                     mapView.X = delta.X;
                     mapView.Y = delta.Y;
                 }
-
-
                 //exitButtonSourceRect = new Rectangle(0, 0, 100, 100);
                 exitButton.Update(gameTime);
-                base.Update(gameTime);
-            
+                base.Update(gameTime);    
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
             // sewers map needs blendstate to look correct with alphas
             if (mapIdx == 8)
                 spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied);
@@ -194,8 +191,9 @@ namespace Utrepalo.Game
 
             spriteBatch.End();
             spriteBatch.Begin();
-            creature.Draw(spriteBatch);
+            creature.Draww(spriteBatch,mapView.X,mapView.Y);
             player.Draw(spriteBatch);
+            creature.Draw(spriteBatch);
             spriteBatch.End();
             spriteBatch.Begin();
             exitButton.Draw(spriteBatch);

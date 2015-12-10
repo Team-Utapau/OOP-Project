@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Utrepalo.Game.Bullets;
 using Utrepalo.Game.Interfaces;
 
@@ -20,6 +21,8 @@ namespace Utrepalo.Game.GameObjects
         private float bulletDelay;
         private List<Bullet> bullets;
         private bool bulletAvailable;
+        private int mapviewX;
+        private int mapviewY;
 
         public Creature(Texture2D objTexture,Rectangle drowingRectangle,Rectangle sourceRectangle,SpriteBatch spriteBatch, int health, int damage, int armor,Game game)
             :base(objTexture,drowingRectangle,sourceRectangle,spriteBatch ,game)
@@ -60,14 +63,22 @@ namespace Utrepalo.Game.GameObjects
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(objTexture,new Vector2(250,250), SourceRectangle, Color.White);
+            var isDraw = true;
+           
+        }
+
+        public  void Draww(SpriteBatch spriteBatch,int X,int Y)
+        {
+            mapviewX = X;
+            mapviewY = Y;
+            spriteBatch.Draw(objTexture,new Vector2(250-X,250-Y), SourceRectangle, Color.White);
             foreach (var bullet in bullets)
             {
                 bullet.Draw(spriteBatch);
             }
         }
 
-        public void Shoot()
+        public void Shoot(int X,int Y)
         {
             if (bulletDelay >= 0)
             {
@@ -76,7 +87,7 @@ namespace Utrepalo.Game.GameObjects
             if (bulletDelay <= 0)
             {
                 var newBullet = new Bullet(bulletTexture);
-                newBullet.position=new Vector2(250,250);
+                newBullet.position=new Vector2(250-X,250-Y);
                 newBullet.isVisible = true;
                 bulletAvailable = false;
                 if (bullets.Count<1)
@@ -92,19 +103,43 @@ namespace Utrepalo.Game.GameObjects
 
         public override void Update(GameTime gameTime)
         {
-            this.SourceRectangle = new Rectangle(48 , 0, 44, 46);
-            Shoot();
-            UpdateBullets();
-
+            base.Update(gameTime);
         }
 
-        public void UpdateBullets()
+        public  void Updatee(GameTime gameTime,int X,int Y)
+        {
+            this.SourceRectangle = new Rectangle(48 , 0, 44, 46);
+            Shoot(X,Y);
+            UpdateBullets(X,Y);
+        }
+
+        public void UpdateBullets(int X,int Y)
         {
             foreach (var bullet in bullets)
             {
-                bullet.position.X = bullet.position.X - 1;
+                if (Keyboard.GetState().IsKeyDown(Keys.Right))
+                {
+                    bullet.position.X = bullet.position.X - 2;
+                }
+                else
+                {
+                    bullet.position.X = bullet.position.X - 1;
+                }
+                if (Keyboard.GetState().IsKeyDown(Keys.Down))
+                {
+                    bullet.position.Y = bullet.position.Y - 1;
+                }
+                if (Keyboard.GetState().IsKeyDown(Keys.Up))
+                {
+                    bullet.position.Y = bullet.position.Y + 1;
+                }
+                if (Keyboard.GetState().IsKeyDown(Keys.Left))
+                {
+                    bullet.position.X = bullet.position.X + 1;
+                }
+                
 
-                if (bullet.position.X<=50)
+                if (bullet.position.X<=50-X)
                 {
                     bullet.isVisible = false;
                     bulletAvailable = true;
