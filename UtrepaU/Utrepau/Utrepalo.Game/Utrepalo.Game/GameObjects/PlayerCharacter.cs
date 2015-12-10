@@ -17,6 +17,7 @@ namespace Utrepalo.Game.GameObjects
         public Vector2 position;
         public float elapsed;
         public double delay = 200;
+        public KeyboardState oldState;
         public int frame;
         public int speed;
         private List<Bullet> bullets;
@@ -96,26 +97,29 @@ namespace Utrepalo.Game.GameObjects
                 newBullet.position = new Vector2(position.X + 32 - newBullet.texture.Width / 2, position.Y + 30);
                 newBullet.isVisible = true;
 
-                if (bullets.Count < 20)
+                if (bullets.Count < 1)  
                 {
+
                     bullets.Add(newBullet);
                 }
             }
 
             if (bulletDelay == 0)
             {
-                bulletDelay = 20;
+                bulletDelay = 1;
             }
         }
 
         public void Update(GameTime gameTime)
         {
+            var newState = Keyboard.GetState();
             sourceRectangle = new Rectangle(48 * frame, 0, 44, 46);
             KeyboardState keyState = Keyboard.GetState();
-            if (keyState.IsKeyDown(Keys.Space))
+            if (keyState.IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space))
             {
                 Shoot();
             }
+            oldState = newState;
 
             UpdateBullets();
 

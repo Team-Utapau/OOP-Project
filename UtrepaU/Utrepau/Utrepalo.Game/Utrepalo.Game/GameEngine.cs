@@ -147,40 +147,7 @@ namespace Utrepalo.Game
                 player.MoveSprite(gameTime);
                 player.MoveLeft(this.Content);
             }
-                //}
-                //if (keys.GetPressedKeys().Count() == 0)
-                //{
-                //    frames = 0;
-                //}
-                //if (keys.IsKeyDown(Keys.Space))
-                //{
-                //    //bullet.BulletDirection = null;
-                //    //bulletRectangle = new Rectangle(player.Rectangle.X, player.Rectangle.Y, 20, 20);
-                //}
-
-                ////switch (bullet.BulletDirection)
-                ////{
-                ////    case "right":
-                ////        bulletRectangle.X += 3;
-
-                ////        break;
-                ////    case "left":
-                ////        bulletRectangle.X -= 3; ;
-
-                ////        break;
-                ////    case "down":
-                ////        bulletRectangle.Y += 3; ;
-
-                ////        break;
-                ////    case "up":
-                ////        bulletRectangle.Y -= 3; ;
-
-                ////        break;
-
-                ////    default:
-                ////        break;
-                ////}
-
+               
                 if (maps[mapIdx].Bounds.Contains(delta))
                 {
 
@@ -195,23 +162,6 @@ namespace Utrepalo.Game
 
                 base.Update(gameTime);
             
-        }
-
-        private void MoveSprite(GameTime gameTime)
-        {
-            elapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            if (elapsed >= delay)
-            {
-                if (frames >= 7)
-                {
-                    frames = 0;
-                }
-                else
-                {
-                    frames++;
-                }
-                elapsed = 0;
-            }
         }
 
         protected override void Draw(GameTime gameTime)
