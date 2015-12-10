@@ -75,6 +75,7 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bullets\Bullet.cs" />
     <Compile Include="GameObjects\Buttons\ExitButton.cs" />
     <Compile Include="GameObjects\Enemies\Mage.cs" />
     <Compile Include="GameObjects\Enemies\Paladin.cs" />

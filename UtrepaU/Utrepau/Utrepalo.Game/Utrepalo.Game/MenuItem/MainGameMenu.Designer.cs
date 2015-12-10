@@ -64,6 +64,7 @@
             this.singlePlayerButton.Size = new System.Drawing.Size(107, 32);
             this.singlePlayerButton.TabIndex = 1;
             this.singlePlayerButton.Text = "Load game";
+
             this.singlePlayerButton.UseVisualStyleBackColor = false;
             this.singlePlayerButton.Click += new System.EventHandler(this.SinglePlayerButton_Click);
             // 

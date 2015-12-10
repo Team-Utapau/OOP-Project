@@ -15,6 +15,7 @@ namespace Utrepalo.Game
 {
     using System;
     using FuncWorks.XNA.XTiled;
+    using Bullets;
 
     public class GameEngine : Microsoft.Xna.Framework.Game
     {
@@ -32,19 +33,24 @@ namespace Utrepalo.Game
         Rectangle sourceRect;
         Rectangle destRect;
         float elapsed;
-        double delay = 200;
+        
         int frames = 0;
         public double actionTimer = 0;
-        
+
         ExitButton exitButton;
         Texture2D exitButtonTexture;
         Rectangle exitButtonRect;
         Vector2 exitButtonPoss;
+
+        Bullet bullet;
+        Rectangle bulletRectangle;
+        Texture2D bulletTexture;
         private Rectangle exitButtonSourceRect;
+        List<Bullet> bullets;
 
 
         PlayerCharacter player;
-
+        private float delay = 200;
 
         public GameEngine(IController controller)
             : base()
@@ -58,17 +64,19 @@ namespace Utrepalo.Game
         protected override void Initialize()
         {
             destRect = new Rectangle(0, 0, 44, 46);
-            player = new PlayerCharacter(playerSprite, destRect, spriteBatch, "Gosho", 2);
-            
+            player = new PlayerCharacter();
+
+
             mapView = graphics.GraphicsDevice.Viewport.Bounds;
             mapView.X = 0;
             mapView.Y = 0;
             mapView.Height = WindowsHeight + 290;
             mapView.Width = WindowsWidth;
-            
+
             exitButtonRect = new Rectangle(700, 600, 100, 100);
             exitButton = new ExitButton(exitButtonTexture, exitButtonRect, spriteBatch);
-            var mouse =this.IsMouseVisible = true;
+            var mouse = this.IsMouseVisible = true;
+            bullet = new Bullet(bulletTexture);
 
             base.Initialize();
         }
@@ -80,9 +88,9 @@ namespace Utrepalo.Game
 
             maps = new List<Map>();
             maps.Add(Content.Load<Map>("Map/NewMap"));
-            player.ObjTexture = Content.Load<Texture2D>("images/walkingDownSprite");
-            
-            
+            //player.objtexture = content.load<texture2d>("images/walkingdownsprite");
+            //bullet.ObjTexture = Content.Load<Texture2D>("images/bullet");
+            player.LoadContent(Content);
             exitButton.ObjTexture = Content.Load<Texture2D>("images/exit-button2");
 
             mapIdx = 0;
@@ -93,64 +101,100 @@ namespace Utrepalo.Game
         }
         protected override void Update(GameTime gameTime)
         {
+
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            sourceRect = new Rectangle(48 * frames, 0, 44, 46);
+            //sourceRect = new Rectangle(48 * frames, 0, 44, 46);
             KeyboardState keys = Keyboard.GetState();
             MouseState mouse = Mouse.GetState();
-            
+
 
             if (keys.IsKeyDown(Keys.Escape))
                 this.Exit();
 
+            player.Update(gameTime);
+
+            //player.MoveSprite(gameTime);
+
             Rectangle delta = mapView;
+
             if (keys.IsKeyDown(Keys.Down))
             {
                 delta.Y += 1;
-                MoveSprite(gameTime);
+                player.MoveSprite(gameTime);
                 player.MoveDown(this.Content);
             }
 
             if (keys.IsKeyDown(Keys.Up))
             {
                 delta.Y -= 1;
-                MoveSprite(gameTime);
+                player.MoveSprite(gameTime);
                 player.MoveUp(this.Content);
             }
 
             if (keys.IsKeyDown(Keys.Right))
             {
-                MoveSprite(gameTime);
-                player.MoveRight(this.Content);
                 delta.X += 1;
+                player.MoveSprite(gameTime);
+                player.MoveRight(this.Content);
             }
+
             if (keys.IsKeyDown(Keys.Left))
             {
-                MoveSprite(gameTime);
-                player.MoveLeft(this.Content);
                 delta.X -= 1;
+                player.MoveSprite(gameTime);
+                player.MoveLeft(this.Content);
             }
-            if (keys.GetPressedKeys().Count() == 0)
-            {
-                frames = 0;
-            }
+                //}
+                //if (keys.GetPressedKeys().Count() == 0)
+                //{
+                //    frames = 0;
+                //}
+                //if (keys.IsKeyDown(Keys.Space))
+                //{
+                //    //bullet.BulletDirection = null;
+                //    //bulletRectangle = new Rectangle(player.Rectangle.X, player.Rectangle.Y, 20, 20);
+                //}
+
+                ////switch (bullet.BulletDirection)
+                ////{
+                ////    case "right":
+                ////        bulletRectangle.X += 3;
+
+                ////        break;
+                ////    case "left":
+                ////        bulletRectangle.X -= 3; ;
+
+                ////        break;
+                ////    case "down":
+                ////        bulletRectangle.Y += 3; ;
+
+                ////        break;
+                ////    case "up":
+                ////        bulletRectangle.Y -= 3; ;
+
+                ////        break;
+
+                ////    default:
+                ////        break;
+                ////}
+
+                if (maps[mapIdx].Bounds.Contains(delta))
+                {
+
+                    destRect.X += delta.X - mapView.X;
+                    destRect.Y += delta.Y - mapView.Y;
+                    mapView.X = delta.X;
+                    mapView.Y = delta.Y;
+                }
 
 
-            if (maps[mapIdx].Bounds.Contains(delta))
-            {
+                exitButtonSourceRect = new Rectangle(0, 0, 100, 100);
 
-                destRect.X += delta.X - mapView.X;
-                destRect.Y += delta.Y - mapView.Y;
-                mapView.X = delta.X;
-                mapView.Y = delta.Y;
-            }
-
-
-            exitButtonSourceRect = new Rectangle(0, 0, 100, 100);
-
-            base.Update(gameTime);
+                base.Update(gameTime);
+            
         }
 
         private void MoveSprite(GameTime gameTime)
@@ -198,13 +242,21 @@ namespace Utrepalo.Game
 
             spriteBatch.End();
             spriteBatch.Begin();
-            spriteBatch.Draw(player.ObjTexture, destRect, sourceRect, Color.White);
+            player.Draw(spriteBatch);
             spriteBatch.End();
-            spriteBatch.Begin();
+            //spriteBatch.Draw(player.objTexture, destRect, sourceRect, Color.White);
+            ////player.Draw(spriteBatch);
+            //spriteBatch.End();
+            //spriteBatch.Begin();
 
-            spriteBatch.Draw(exitButton.ObjTexture, exitButton.Rectangle, exitButtonSourceRect, Color.White);
-            spriteBatch.End();
+            //spriteBatch.Draw(exitButton.ObjTexture, exitButton.Rectangle, exitButtonSourceRect, Color.White);
+            //spriteBatch.End();
 
+            //spriteBatch.Begin();
+            //spriteBatch.Draw(bullet.texture, bulletRectangle, new Rectangle(0, 0, 16, 16), Color.Aqua);
+            ////bullet.Draw(spriteBatch);
+            //spriteBatch.End();
+            
 
             base.Draw(gameTime);
         }

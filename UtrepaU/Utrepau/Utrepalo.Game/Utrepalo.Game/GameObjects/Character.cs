@@ -10,7 +10,7 @@ namespace Utrepalo.Game.GameObjects
 {
     using Interfaces;
 
-    public abstract class Character :GameObject, ICharacter
+    public abstract class Character : GameObject, ICharacter
     {
         private List<Creature> creatures;
         private string name;

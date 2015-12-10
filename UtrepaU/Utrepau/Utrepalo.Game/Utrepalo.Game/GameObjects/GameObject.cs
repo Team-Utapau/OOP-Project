@@ -10,7 +10,7 @@ using Utrepalo.Game.Interfaces;
 
 namespace Utrepalo.Game.GameObjects
 {
-    public abstract class GameObject:ICollidable
+    public abstract class GameObject: ICollidable
     {
         protected Texture2D objTexture;
         protected Rectangle rectangle;
@@ -59,6 +59,7 @@ namespace Utrepalo.Game.GameObjects
             spriteBatch.Draw(this.objTexture,rect,Color.White);
         }
         public abstract void Update();
+
         public abstract void RespondToCollision(GameObject hitObject);
     }
 }
