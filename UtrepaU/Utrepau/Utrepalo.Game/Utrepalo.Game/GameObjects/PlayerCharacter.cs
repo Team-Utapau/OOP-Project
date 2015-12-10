@@ -24,6 +24,9 @@ namespace Utrepalo.Game.GameObjects
         public int frame;
         public int speed;
         private List<Bullet> bullets;
+        private string lastDirection = "down";
+        private bool bulletAvailable = true;
+        private string bulletDirect = "down";
 
 
         private int gold;
@@ -84,6 +87,7 @@ namespace Utrepalo.Game.GameObjects
                 Bullet newBullet = new Bullet(bulletTexture);
                 newBullet.position = new Vector2(position.X + 32 - newBullet.texture.Width / 2, position.Y + 30);
                 newBullet.isVisible = true;
+                bulletAvailable = false;
 
                 if (bullets.Count < 1)  
                 {
@@ -110,37 +114,92 @@ namespace Utrepalo.Game.GameObjects
             oldState = newState;
 
             UpdateBullets();
-
-            if (keyState.IsKeyDown(Keys.Up))
+            if (keyState.IsKeyDown(Keys.Up) || (keyState.IsKeyDown(Keys.Up) && keyState.IsKeyDown(Keys.Space)))
             {
                 position.Y = position.Y - speed;
+                lastDirection = "up";
+                if (bulletAvailable == true)
+                {
+                    bulletDirect = "up";
+                    bulletAvailable = false;
+                }
             }
 
-            if (keyState.IsKeyDown(Keys.Down))
+            if (keyState.IsKeyDown(Keys.Down) || (keyState.IsKeyDown(Keys.Down) && keyState.IsKeyDown(Keys.Space)))
             {
                 position.Y = position.Y + speed;
+                lastDirection = "down";
+                if (bulletAvailable == true)
+                {
+                    bulletDirect = "down";
+                    bulletAvailable = false;
+                }
             }
 
-            if (keyState.IsKeyDown(Keys.Right))
+            if (keyState.IsKeyDown(Keys.Right) || (keyState.IsKeyDown(Keys.Right) && keyState.IsKeyDown(Keys.Space)))
             {
                 position.X = position.X + speed;
+                lastDirection = "right";
+                if (bulletAvailable == true)
+                {
+                    bulletDirect = "right";
+                    bulletAvailable = false;
+                }
             }
 
-            if (keyState.IsKeyDown(Keys.Left))
+            if (keyState.IsKeyDown(Keys.Left) || (keyState.IsKeyDown(Keys.Left) && keyState.IsKeyDown(Keys.Space)))
             {
                 position.X = position.X - speed;
+                lastDirection = "left";
+                if (bulletAvailable == true)
+                {
+                    bulletDirect = "left";
+                    bulletAvailable = false;
+                }
             }
+
         }
 
         public void UpdateBullets()
         {
             foreach (Bullet bullet in this.bullets)
             {
-                bullet.position.Y = bullet.position.Y - bullet.speed;
+                if (bulletDirect == "up")
+                {
+                    bullet.position.Y = bullet.position.Y - bullet.speed;
+                }
+                else if (bulletDirect == "down")
+                {
+                    bullet.position.Y = bullet.position.Y + bullet.speed;
+                }
+                else if (bulletDirect == "right")
+                {
+                    bullet.position.X = bullet.position.X + bullet.speed;
+                }
+                else if (bulletDirect == "left")
+                {
+                    bullet.position.X = bullet.position.X - bullet.speed;
+                }
 
-                if (bullet.position.Y <= 0)
+                if (bullet.position.Y < this.position.Y - 250)
                 {
                     bullet.isVisible = false;
+                    bulletAvailable = true;
+                }
+                if (bullet.position.X < this.position.X - 250)
+                {
+                    bullet.isVisible = false;
+                    bulletAvailable = true;
+                }
+                if (bullet.position.Y > this.position.Y + 250)
+                {
+                    bullet.isVisible = false;
+                    bulletAvailable = true;
+                }
+                if (bullet.position.X > this.position.X + 250)
+                {
+                    bullet.isVisible = false;
+                    bulletAvailable = true;
                 }
             }
 

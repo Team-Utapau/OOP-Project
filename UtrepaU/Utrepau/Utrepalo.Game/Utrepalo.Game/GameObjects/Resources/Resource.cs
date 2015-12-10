@@ -11,9 +11,9 @@ namespace Utrepalo.Game.GameObjects.Resources
 
     public abstract class Resource :GameObject , IItem
     {
-        public int AttackEffect { get; }
-        public int DefenceEffect { get; }
-        public int HealingEffect { get; }
+        public int AttackEffect { get; set; }
+        public int DefenceEffect { get; set; }
+        public int HealingEffect { get; set; }
 
         protected Resource(Texture2D objTexture, Rectangle drowingRectangle, Rectangle sourceRectangle, SpriteBatch spriteBatch, Game game, int attackEffect, int defenceEffect, int healingEffect) : base(objTexture, drowingRectangle, sourceRectangle, spriteBatch, game)
         {
