@@ -29,6 +29,7 @@ namespace Utrepalo.Game
         Rectangle mapView;
         Int32 mapIdx;
         List<Map> maps;
+        
 
         float elapsed;
         
@@ -49,6 +50,12 @@ namespace Utrepalo.Game
          Rectangle drowingPlayerRectangle;
          Rectangle sourcePlayerRectangle;
 
+        //Creature
+         private Creature creature;
+        private Texture2D creatureTexture;
+         Rectangle drawingCreatureRectangle;
+         Rectangle sourceCreatureRectangle;
+
         private float delay = 200;
 
         public GameEngine(IController controller)
@@ -63,6 +70,7 @@ namespace Utrepalo.Game
         protected override void Initialize()
         {
             player = new PlayerCharacter(playerTexture,drowingPlayerRectangle,sourcePlayerRectangle,spriteBatch,this);
+            creature = new Creature(creatureTexture,drawingCreatureRectangle,sourceCreatureRectangle,spriteBatch,100,100,100,this);
 
 
             mapView = graphics.GraphicsDevice.Viewport.Bounds;
@@ -85,7 +93,7 @@ namespace Utrepalo.Game
 
             maps = new List<Map>();
             maps.Add(Content.Load<Map>("Map/NewMap"));
-
+            creature.LoadContent(Content);
             player.LoadContent(Content);
             exitButton.LoadContent(Content);
           //  exitButton.ObjTexture = Content.Load<Texture2D>("images/exit-button2");
@@ -111,6 +119,7 @@ namespace Utrepalo.Game
                 this.Exit();
 
             player.Update(gameTime);
+            creature.Update(gameTime);
 
             Rectangle delta = mapView;
 
@@ -185,6 +194,7 @@ namespace Utrepalo.Game
 
             spriteBatch.End();
             spriteBatch.Begin();
+            creature.Draw(spriteBatch);
             player.Draw(spriteBatch);
             spriteBatch.End();
             spriteBatch.Begin();
