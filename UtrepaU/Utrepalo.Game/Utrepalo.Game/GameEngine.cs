@@ -26,15 +26,21 @@ namespace Utrepalo.Game
 
         public static Texture2D BulletTexture;
         public static SpriteFont Font;
+
         public static Texture2D PlayerTexture;
         public static Texture2D HealthTexture;
+
         public static Texture2D MapTexture;
         //test
         public static Texture2D BasisWallTexture;
 
+        public static Texture2D HealingPotionTexture;
+
+        public static Texture2D CoinTexture;
+
         private SpriteBatch spriteBatch;
         private GraphicsDeviceManager graphics;
-        private Camera camera;
+
 
         private bool isGameOver;
         private bool isGameWon;
@@ -53,28 +59,8 @@ namespace Utrepalo.Game
 
         protected override void Initialize()
         {
-            //camera = new Camera(GraphicsDevice.Viewport);
-            //drowingPlayerRectangle = new Rectangle(-400, -400, 48, 50);
-            //sourcePlayerRectangle = new Rectangle(0, 0, 48, 50);
-            //drawingCreatureRectangle = new Rectangle(-400,-400,48,50);
-            ////drowingMapRectangle = new Rectangle(0,0,1940,2048);
-            ////sourceMapRectangle = new Rectangle(0, 0, 1960, 2048);
-            //player = new Player(playerTexture, drowingPlayerRectangle, sourcePlayerRectangle, spriteBatch, this);
-            //exitButton = new ExitButton(exitButtonTexture, exitButtonSourceRect, spriteBatch, this);
-            //healingPotion = new HealingPotion(healingPotionTexture,drowingPotionRectangle,sourcePotionRectangle,spriteBatch,this);
-
-            //creature = new Creature(creatureTexture, drawingCreatureRectangle, sourceCreatureRectangle, spriteBatch, 100, 100, 100, this);
-            //////worldMap = new WorldMap(mapTexture,drowingMapRectangle,sourceMapRectangle,spriteBatch,this);
-
-
-            //////mapView = graphics.GraphicsDevice.Viewport.Bounds;
-            //////mapView.X = 0;
-            //////mapView.Y = 0;
-            //////mapView.Height = WindowsHeight + 290;
-            //////mapView.Width = WindowsWidth;
-
+            
             //this.IsMouseVisible = true;
-            camera = new Camera(GraphicsDevice.Viewport);
             base.Initialize();
         }
 
@@ -89,14 +75,17 @@ namespace Utrepalo.Game
             //FastTankTexture = this.Content.Load<Texture2D>("Graphics/Sprites/fastTank");
             BasisWallTexture = this.Content.Load<Texture2D>("images/Wall");
             //BasicBushTexture = this.Content.Load<Texture2D>("Graphics/Sprites/basicBush");
-            BulletTexture = this.Content.Load<Texture2D>("images/bullet");
+            BulletTexture = this.Content.Load<Texture2D>("images/fireballSprite");
             //BunkerTexture = this.Content.Load<Texture2D>("Graphics/Sprites/turret");
             //ArmorTexture = this.Content.Load<Texture2D>("Graphics/Sprites/armorSprite");
             HealthTexture = this.Content.Load<Texture2D>("images/dot");
+            HealingPotionTexture = this.Content.Load<Texture2D>("images/greenPotion");
+            CoinTexture = this.Content.Load<Texture2D>("images/croppedCoin");
             //ShieldTexture = this.Content.Load<Texture2D>("Graphics/Sprites/shieldSprite");
             //SpeedPowerUpTexture = this.Content.Load<Texture2D>("Graphics/Sprites/speedPowerUpTexture");
             //SteelWallTexture = this.Content.Load<Texture2D>("Graphics/Sprites/steelWall");
-            MapTexture = this.Content.Load<Texture2D>("Map/m1fpuUr");
+            
+            MapTexture = this.Content.Load<Texture2D>("images/backgroundTest");
 
             GameObjects = MapLoader.LoadMap(this.spriteBatch);
 
@@ -119,6 +108,8 @@ namespace Utrepalo.Game
                 var collectibles = GameObjects.Where(gameObject => gameObject is CollectibleItem).ToList();
                 var ammo = GameObjects.Where(gameObject => gameObject is BaseBullet).ToList();
 
+              
+
                 for (int i = 0; i < GameObjects.Count; i++)
                 {
                     if (GameObjects[i] is Player)
@@ -127,6 +118,7 @@ namespace Utrepalo.Game
                         var wallRectangle = walls.FirstOrDefault(w => w.Rectangle.Intersects(player.Rectangle)).Rectangle;
 
                         player.PlayerUpdate(gameTime, this.Content, wallRectangle);
+                    
                     }
                    
                     GameObjects[i].Update();
@@ -171,24 +163,35 @@ namespace Utrepalo.Game
         {
             this.GraphicsDevice.Clear(Color.DarkGoldenrod);
             this.spriteBatch.Begin();
-
+            spriteBatch.Draw(MapTexture, new Rectangle(0, 0, 1600, WindowsHeight), new Rectangle(0, 0, 1400, WindowsHeight), Color.White);
             var characters = GameObjects.Where(gameObject => gameObject is Character);
             var obstacles = GameObjects.Where(gameObject => gameObject is Wall/* || gameObject is Hideout*/);
             var collectibles = GameObjects
                 .Where(gameObject => gameObject is CollectibleItem && ((CollectibleItem)gameObject).ItemState == CollectibleItemState.Active);
-            var bullets = GameObjects.Where(gameObject => gameObject is BaseBullet);    
-
+            var bullets = GameObjects.Where(gameObject => gameObject is BaseBullet);
+            var healingPotions = GameObjects.Where(c => c is HealingPotion).ToList();
+            var coins = GameObjects.Where(c => c is Coin).ToList();
             foreach (var character in characters)
             {
                 var player = character as Player;
                 player.PlayerDrow(spriteBatch);
+                player.Draw(spriteBatch);
             }
 
             foreach (var character in obstacles)
             {
                 character.Draw(this.spriteBatch);
             }
+            foreach (var healingPotion in healingPotions)
+            {
+                healingPotion.Draw(this.spriteBatch);
+                
+            }
+            foreach (var coin in coins)
+            {
+                coin.Draw(this.spriteBatch);
 
+            }
             foreach (var item in collectibles)
             {
                 item.Draw(this.spriteBatch);
@@ -199,7 +202,7 @@ namespace Utrepalo.Game
                 character.Draw(this.spriteBatch);
             }
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, camera.transform);
+        
             
             //if (this.isGamePaused)
             //{
@@ -224,7 +227,6 @@ namespace Utrepalo.Game
             //    }
             //}
 
-            this.spriteBatch.End();
 
             base.Draw(gameTime);
         }

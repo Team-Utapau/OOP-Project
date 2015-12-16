@@ -7,6 +7,7 @@ using Utrepalo.Game.Test;
 
 namespace Utrepalo.Game.GameObjects
 {
+    using Resources.Items;
     using Utrepalo.Game.Enums;
     using Walls;
 
@@ -22,10 +23,7 @@ namespace Utrepalo.Game.GameObjects
 
         public double Speed
         {
-            get
-            {
-                return this.speed;
-            }
+            get { return this.speed; }
 
             protected set
             {
@@ -39,7 +37,7 @@ namespace Utrepalo.Game.GameObjects
                 this.speed = value;
             }
         }
-
+        public int Coins { get; set; }
         public abstract void Move();
 
         public override void Update()
@@ -54,8 +52,8 @@ namespace Utrepalo.Game.GameObjects
             if (hitObject is Character || hitObject is Wall)
             {
                 this.Rectangle = new Rectangle(
-                    (int)this.PreviousPosition.X,
-                    (int)this.PreviousPosition.Y,
+                    (int) this.PreviousPosition.X,
+                    (int) this.PreviousPosition.Y,
                     this.Rectangle.Width,
                     this.Rectangle.Height);
             }
@@ -65,43 +63,47 @@ namespace Utrepalo.Game.GameObjects
 
         public void CheckBorderCollision()
         {
-           var walls = GameEngine.GameObjects.Where(c => c is StoneWall).ToList();
+            var walls = GameEngine.GameObjects.Where(c => c is StoneWall).ToList();
+            var potions = GameEngine.GameObjects.Where(c => c is HealingPotion).ToList();
+            var coints = GameEngine.GameObjects.Where(c => c is Coin).ToList();
 
+            foreach (var coin in coints)
+            {
+                if (coin.Rectangle.Intersects(this.Rectangle))
+                {
+                    coin.State=GameObjectState.Destroyed;
+                    this.Coins += 1;
+                }
+            }
             foreach (var wall in walls)
             {
                 var previous = this.Rectangle;
                 if (wall.Rectangle.Intersects(this.Rectangle))
                 {
-                    previous.X = (int)this.PreviousPosition.X;
-                    previous.Y = (int)this.PreviousPosition.Y;
+                    previous.X = (int) this.PreviousPosition.X;
+                    previous.Y = (int) this.PreviousPosition.Y;
 
                 }
                 this.Rectangle = previous;
             }
+            foreach (var potion in potions)
+            {
+                if (HealthPoints<500)
+                {
+                    if (potion.Rectangle.Intersects(this.Rectangle))
+                    {
+                        potion.State = GameObjectState.Destroyed;
+                        this.HealthPoints += 100;
+                    }
+                    if (HealthPoints > 500)
+                    {
+                        HealthPoints = 500;
+                    }
+                }
+                
             }
-            //bool isOnLeftBorder = this.Rectangle.X < 0;
-            //bool isOnRightBorder = this.Rectangle.X > GameEngine.WindowsWidth;
-            //bool isOnTopBorder = this.Rectangle.Y < 0;
-            //bool isOnBottomBorder = this.Rectangle.Y > GameEngine.WindowsHeight;
-
-            //if (isOnLeftBorder)
-            //{
-            //    this.rectangle.X = 0;
-            //}
-            //else if (isOnRightBorder)
-            //{
-            //    this.rectangle.X = GameEngine.WindowsWidth;
-            //}
-            //else if (isOnBottomBorder)
-            //{
-            //    this.rectangle.Y = GameEngine.WindowsHeight;
-            //}
-            //else if (isOnTopBorder)
-            //{
-            //    this.rectangle.Y = 0;
-            //}
         }
 
-
     }
+}
 

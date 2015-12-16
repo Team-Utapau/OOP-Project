@@ -9,6 +9,8 @@ using Utrepalo.Game.Test;
 
 namespace Utrepalo.Game
 {
+    using GameObjects.Resources.Items;
+
     public class MapLoader
     {
         public static List<GameObject> LoadMap(SpriteBatch spriteBatch/*, GameLevel level*/)
@@ -84,24 +86,24 @@ namespace Utrepalo.Game
 
                                 gameObjects.Add(new Player(GameEngine.PlayerTexture, rect));
                                 break;
-                            //case 'T':
-                            //    rect = new Rectangle(
-                            //        positionX - GameEngine.Offset,
-                            //        positionY - GameEngine.Offset,
-                            //        SmallTextureSize,
-                            //        SmallTextureSize);
+                            case 'T':
+                                rect = new Rectangle(
+                                    positionX ,
+                                    positionY ,
+                                    20,
+                                    25);
 
-                            //    gameObjects.Add(new BasicTank(GameEngine.BasicTankTexture, rect));
-                            //    break;
-                            //case 'F':
-                            //    rect = new Rectangle(
-                            //        positionX - GameEngine.Offset,
-                            //        positionY - GameEngine.Offset,
-                            //        SmallTextureSize,
-                            //        SmallTextureSize);
+                                gameObjects.Add(new HealingPotion(GameEngine.HealingPotionTexture, rect));
+                                break;
+                            case 'C':
+                                rect = new Rectangle(
+                                    positionX,
+                                    positionY ,
+                                   30,
+                                    30);
 
-                            //    gameObjects.Add(new FastTank(GameEngine.FastTankTexture, rect));
-                            //    break;
+                                gameObjects.Add(new Coin(GameEngine.CoinTexture, rect));
+                                break;
                             //case 'S':
                             //    rect = new Rectangle(
                             //        positionX - GameEngine.Offset,

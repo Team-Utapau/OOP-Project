@@ -11,7 +11,7 @@ namespace Utrepalo.Game.Bullets
 
     public abstract class BaseBullet : GameObject, IAttack, IMovable
     {
-        private const int DefaultSpeed = 10;
+        private const int DefaultSpeed = 6;
 
         protected BaseBullet(
             Texture2D objTexture,

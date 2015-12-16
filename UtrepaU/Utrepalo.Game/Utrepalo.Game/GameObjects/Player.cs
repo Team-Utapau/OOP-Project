@@ -9,6 +9,7 @@ namespace Utrepalo.Game.GameObjects
     using System.Collections.Generic;
     using Bullets;
     using Microsoft.Xna.Framework.Input;
+    using Game = Microsoft.Xna.Framework.Game;
 
     public class Player : PlayerCharacter
     {
@@ -144,12 +145,12 @@ namespace Utrepalo.Game.GameObjects
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            base.Draw(spriteBatch);
+
             spriteBatch.DrawString(
                 GameEngine.Font,
-                string.Format("Health: {0}", this.HealthPoints),
-                new Vector2(10, GameEngine.WindowsHeight - 50),
-                Color.Purple);
+                string.Format("Health: {0}\nCoins: {1}/8", this.HealthPoints,this.Coins),
+                new Vector2(GameEngine.WindowsWidth- 250, 21),
+                Color.DarkRed);
           
         }
 

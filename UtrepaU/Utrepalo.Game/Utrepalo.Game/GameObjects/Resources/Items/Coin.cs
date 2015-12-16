@@ -11,26 +11,26 @@ namespace Utrepalo.Game.GameObjects.Resources.Items
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
 
-    public class HealingPotion : GameObject
+    public class Coin : GameObject
     {
         public override void Update()
         {
-          
+
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Rectangle rect = new Rectangle(this.Rectangle.X, this.Rectangle.Y, 20, 25);
+            Rectangle rect = new Rectangle(this.Rectangle.X, this.Rectangle.Y, 27,27);
             spriteBatch.Draw(this.objTexture, rect, Color.White);
         }
 
         public override void RespondToCollision(GameObject hitObject)
         {
-            
+
         }
 
 
-        public HealingPotion(Texture2D objTexture, Rectangle rectangle) : base(objTexture, rectangle)
+        public Coin(Texture2D objTexture, Rectangle rectangle) : base(objTexture, rectangle)
         {
         }
     }

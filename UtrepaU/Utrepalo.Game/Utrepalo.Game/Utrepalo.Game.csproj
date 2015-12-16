@@ -92,6 +92,7 @@
     <Compile Include="GameObjects\GameObject.cs" />
     <Compile Include="GameObjects\Player.cs" />
     <Compile Include="GameObjects\PlayerCharacter.cs" />
+    <Compile Include="GameObjects\Resources\Items\Coin.cs" />
     <Compile Include="GameObjects\Resources\Items\CollectibleItem.cs" />
     <Compile Include="GameObjects\Resources\Items\HealingPotion.cs" />
     <Compile Include="GameObjects\Resources\Resource.cs" />

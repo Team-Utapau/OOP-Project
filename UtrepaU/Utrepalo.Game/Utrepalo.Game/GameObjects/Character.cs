@@ -42,8 +42,8 @@ namespace Utrepalo.Game.GameObjects
         public void Shoot(Direction direction)
         {
             Rectangle bulletPosition;
-            int rectangleBulletMinimizedWidth = this.Rectangle.Width / 3;
-            int rectangleBulletMinimizedHeight = this.Rectangle.Height / 3;
+            int rectangleBulletMinimizedWidth = this.Rectangle.Width / 2;
+            int rectangleBulletMinimizedHeight = this.Rectangle.Height / 2;
             switch (direction)
             {
                 case Direction.Down:
