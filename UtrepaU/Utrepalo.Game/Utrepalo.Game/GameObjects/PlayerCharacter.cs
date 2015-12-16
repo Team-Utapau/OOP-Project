@@ -45,7 +45,10 @@ namespace Utrepalo.Game.GameObjects
         public override void Update()
         {
             this.PreviousPosition = new Vector2(this.Rectangle.X, this.Rectangle.Y);
-
+            if (this.HealthPoints <= 0)
+            {
+                this.State=GameObjectState.Destroyed;;
+            }
             this.CheckBorderCollision();
         }
 

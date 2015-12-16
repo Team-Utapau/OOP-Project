@@ -21,23 +21,15 @@ namespace Utrepalo.Game
         public const int WindowsWidth = 1200;
         public const int WindowsHeight = 700;
         public const int Offset = 25;
-
         public static List<GameObject> GameObjects = new List<GameObject>(); 
-
         public static Texture2D BulletTexture;
         public static SpriteFont Font;
-
         public static Texture2D PlayerTexture;
         public static Texture2D HealthTexture;
-
         public static Texture2D MapTexture;
-        //test
         public static Texture2D BasisWallTexture;
-
         public static Texture2D HealingPotionTexture;
-
         public static Texture2D CoinTexture;
-
         private SpriteBatch spriteBatch;
         private GraphicsDeviceManager graphics;
 
@@ -140,6 +132,7 @@ namespace Utrepalo.Game
 
                 GameObjects.RemoveAll(x => x.State == GameObjectState.Destroyed);
             }
+            this.IsGameOver();
             base.Update(gameTime);
 
             this.controller.ProcessUserInput();
@@ -182,14 +175,44 @@ namespace Utrepalo.Game
             {
                 character.Draw(this.spriteBatch);
             }
+            if (isGameOver)
+            {
+                if (isGameWon)
+                {
+                    spriteBatch.DrawString(Font,"You Win!",new Vector2(500,320),Color.Red);
+                    
+                }
+                else
+                {
+                    spriteBatch.DrawString(Font, "You Lose!", new Vector2(500, 320), Color.Red);
+                   
+                }
+            }
             spriteBatch.End();
-        
-            
+
             
             base.Draw(gameTime);
         }
 
-
+        private void IsGameOver()
+        {
+            bool isPlayerAlive = GameObjects.Any(g => g is Player);
+            bool areCoinsLeft = GameObjects.Any(c => c is Coin);
+            if (!isPlayerAlive)
+            {
+                this.isGameOver = true;
+                this.isGameWon = false;
+            }
+            if (!areCoinsLeft)
+            {
+                var player = GameObjects.FirstOrDefault(c => c is Player);
+                if (player.Rectangle.X >= 1200)
+                {
+                    this.isGameOver = true;
+                    this.isGameWon = true;
+                }
+            }
+        }
     }
 }
 
