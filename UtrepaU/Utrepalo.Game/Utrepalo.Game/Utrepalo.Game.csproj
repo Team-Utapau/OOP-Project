@@ -143,12 +143,9 @@
     <Content Include="GameThumbnail.png">
       <XnaPlatformSpecific>true</XnaPlatformSpecific>
     </Content>
-    <Content Include="Resources\Map.txt" />
+    <Content Include="Resources\h3-cover.jpg" />
     <Content Include="Resources\mapFinal.txt" />
-    <Content Include="Resources\Map_Glory.txt" />
     <Content Include="Resources\Wall.jpg" />
-    <None Include="Resources\h3-cover.jpg" />
-    <None Include="Resources\h3-cover.jpg.bmp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Utrepalo.GameContent\Utrepalo.GameContent.contentproj">
@@ -184,9 +181,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MenuItem\MainMenu.resx" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Test\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--

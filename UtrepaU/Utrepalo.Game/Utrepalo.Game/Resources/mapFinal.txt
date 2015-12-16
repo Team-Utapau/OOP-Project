@@ -2,7 +2,7 @@ wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 w     w      w         w  C   w        w
 w  P  w           w       E   w        w
 w          wwwwwwwwwww   wwwwwwwwwwwwwww
-w     w    w             w     w      Cw
+w     w    w             w     w    C  w
 w  wwwwwwwww  E          w     w  E    w
 w               wwwwwwwwww     wwwww   w
 w  E    wwwww   w                      w

@@ -14,11 +14,13 @@ namespace Utrepalo.Game.GameObjects
     public abstract class PlayerCharacter : Character, IMovable
     {
         private double speed;
+        private int coins;
 
         public PlayerCharacter(Texture2D objTexture, Rectangle rectangle, int attack, int healtPoints)
             : base(objTexture, rectangle, attack, healtPoints)
         {
             this.Speed = speed;
+            this.coins = Coins;
         }
 
         public double Speed

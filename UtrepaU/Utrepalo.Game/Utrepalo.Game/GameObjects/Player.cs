@@ -148,7 +148,7 @@ namespace Utrepalo.Game.GameObjects
 
             spriteBatch.DrawString(
                 GameEngine.Font,
-                string.Format("Health: {0}\nCoins: {1}/8", this.HealthPoints,this.Coins),
+                string.Format("Health: {0}\nCoins: {1}/10", this.HealthPoints,this.Coins),
                 new Vector2(GameEngine.WindowsWidth- 250, 21),
                 Color.DarkRed);
           
@@ -179,22 +179,18 @@ namespace Utrepalo.Game.GameObjects
         private void MoveUp(ContentManager content)
         {
             this.objTexture = content.Load<Texture2D>("images/walkingUpSprite");
-            //this.bulletTexture = content.Load<Texture2D>("images/bullet");
         }
         private void MoveDown(ContentManager content)
         {
             this.objTexture = content.Load<Texture2D>("images/walkingDownSprite");
-            // this.bulletTexture = content.Load<Texture2D>("images/bullet");
         }
         private void MoveLeft(ContentManager content)
         {
             this.objTexture = content.Load<Texture2D>("images/walkingLeftSprite");
-            //this.bulletTexture = content.Load<Texture2D>("images/bullet");
         }
         private void MoveRight(ContentManager content)
         {
             this.objTexture = content.Load<Texture2D>("images/walkingRightSprite");
-            //this.bulletTexture = content.Load<Texture2D>("images/bullet");
         }
     }
 }

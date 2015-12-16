@@ -69,21 +69,12 @@ namespace Utrepalo.Game
             this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
             this.graphics.ApplyChanges();
             Font = this.Content.Load<SpriteFont>("CustomFonts/ArialFont");
-            
-            //BasicTankTexture = this.Content.Load<Texture2D>("Graphics/Sprites/basicTank");
             PlayerTexture = this.Content.Load<Texture2D>("images/walkingDownSprite");
-            //FastTankTexture = this.Content.Load<Texture2D>("Graphics/Sprites/fastTank");
             BasisWallTexture = this.Content.Load<Texture2D>("images/Wall");
-            //BasicBushTexture = this.Content.Load<Texture2D>("Graphics/Sprites/basicBush");
             BulletTexture = this.Content.Load<Texture2D>("images/fireballSprite");
-            //BunkerTexture = this.Content.Load<Texture2D>("Graphics/Sprites/turret");
-            //ArmorTexture = this.Content.Load<Texture2D>("Graphics/Sprites/armorSprite");
             HealthTexture = this.Content.Load<Texture2D>("images/dot");
             HealingPotionTexture = this.Content.Load<Texture2D>("images/greenPotion");
             CoinTexture = this.Content.Load<Texture2D>("images/croppedCoin");
-            //ShieldTexture = this.Content.Load<Texture2D>("Graphics/Sprites/shieldSprite");
-            //SpeedPowerUpTexture = this.Content.Load<Texture2D>("Graphics/Sprites/speedPowerUpTexture");
-            //SteelWallTexture = this.Content.Load<Texture2D>("Graphics/Sprites/steelWall");
             
             MapTexture = this.Content.Load<Texture2D>("images/backgroundTest");
 
@@ -101,7 +92,7 @@ namespace Utrepalo.Game
                 this.Exit();
             }
             
-            if (true/*!this.isGamePaused*/)
+            if (true)
             {
                 var walls = GameObjects.Where(gameObject => !(gameObject is BaseBullet) && !(gameObject is CollectibleItem)).ToList();
                 var stoneWall = GameObjects.Where(c => c is StoneWall).ToList();
@@ -149,11 +140,6 @@ namespace Utrepalo.Game
 
                 GameObjects.RemoveAll(x => x.State == GameObjectState.Destroyed);
             }
-
-
-
-            this.CheckGameOver();
-
             base.Update(gameTime);
 
             this.controller.ProcessUserInput();
@@ -165,20 +151,13 @@ namespace Utrepalo.Game
             this.spriteBatch.Begin();
             spriteBatch.Draw(MapTexture, new Rectangle(0, 0, 1600, WindowsHeight), new Rectangle(0, 0, 1400, WindowsHeight), Color.White);
             var characters = GameObjects.Where(gameObject => gameObject is Character);
-            var obstacles = GameObjects.Where(gameObject => gameObject is Wall/* || gameObject is Hideout*/);
-            var collectibles = GameObjects
-                .Where(gameObject => gameObject is CollectibleItem && ((CollectibleItem)gameObject).ItemState == CollectibleItemState.Active);
+            var walls = GameObjects.Where(gameObject => gameObject is Wall);
             var bullets = GameObjects.Where(gameObject => gameObject is BaseBullet);
             var healingPotions = GameObjects.Where(c => c is HealingPotion).ToList();
             var coins = GameObjects.Where(c => c is Coin).ToList();
-            foreach (var character in characters)
-            {
-                var player = character as Player;
-                player.PlayerDrow(spriteBatch);
-                player.Draw(spriteBatch);
-            }
+           
 
-            foreach (var character in obstacles)
+            foreach (var character in walls)
             {
                 character.Draw(this.spriteBatch);
             }
@@ -192,9 +171,11 @@ namespace Utrepalo.Game
                 coin.Draw(this.spriteBatch);
 
             }
-            foreach (var item in collectibles)
+            foreach (var character in characters)
             {
-                item.Draw(this.spriteBatch);
+                var player = character as Player;
+                player.PlayerDrow(spriteBatch);
+                player.Draw(spriteBatch);
             }
 
             foreach (var character in bullets)
@@ -204,49 +185,10 @@ namespace Utrepalo.Game
             spriteBatch.End();
         
             
-            //if (this.isGamePaused)
-            //{
-            //    if (this.isGameOver)
-            //    {
-            //        const string GameLostMessage = "You were killed! Press Enter to restart the game.";
-            //        const string GameWonMessage = "All enemies are destroyed! Press Enter to restart the game.";
-
-            //        this.spriteBatch.DrawString(
-            //            Font,
-            //            this.isGameWon ? GameWonMessage : GameLostMessage,
-            //            new Vector2(50, WindowHeight - 100),
-            //            Color.BlanchedAlmond);
-            //    }
-            //    else
-            //    {
-            //        this.spriteBatch.DrawString(
-            //            this.gamePauseFont,
-            //            "Paused",
-            //            new Vector2(WindowWidth / 3, WindowHeight / 3),
-            //            Color.BlanchedAlmond);
-            //    }
-            //}
-
-
+            
             base.Draw(gameTime);
         }
 
-        private void CheckGameOver()
-        {
-            //bool enemiesLeft = GameObjects.Any(gameObject => gameObject is EnemyTank || gameObject is Bunker);
-            bool playerAlive = GameObjects.Any(gameObject => gameObject is Player);
-
-            //if (!enemiesLeft)
-            //{
-            //    this.isGameOver = true;
-            //    this.isGameWon = true;
-            //}
-            //else if (!playerAlive)
-            //{
-            //    this.isGameOver = true;
-            //    this.isGameWon = false;
-            //}
-        }
 
     }
 }
