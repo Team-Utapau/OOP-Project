@@ -161,7 +161,7 @@ namespace Utrepalo.Game
                             //    break;
                             case 'E':
                                 rect = new Rectangle(
-                                    positionX - GameEngine.Offset,
+                                    positionX - GameEngine.Offset-10,
                                     positionY - GameEngine.Offset,
                                     30,
                                     30);

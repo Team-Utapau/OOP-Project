@@ -12,8 +12,9 @@ namespace Utrepalo.Game.GameObjects.Enemies
     {
         private const int BoykoDefaultAttack = 250;
         private const int BoykoDefaultHealthPoints = 1000;
+        private const int BoykoDefaultShotTimeout = 50;
 
-        public Boyko(Texture2D objTexture, Rectangle rectangle) : base(objTexture, rectangle, BoykoDefaultAttack, BoykoDefaultHealthPoints)
+        public Boyko(Texture2D objTexture, Rectangle rectangle) : base(objTexture, rectangle, BoykoDefaultAttack, BoykoDefaultHealthPoints,BoykoDefaultShotTimeout)
         {
         }
 

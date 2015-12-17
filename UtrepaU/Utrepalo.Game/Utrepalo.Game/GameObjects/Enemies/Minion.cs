@@ -8,11 +8,14 @@ namespace Utrepalo.Game.GameObjects.Enemies
 
     public class Minion : Creature
     {
-        private const int MinionDefaultAttack = 150;
-        private const int MinionDefaultHealthPoints = 300;
+        private const int MinionDefaultAttack = 120;
+        private const int MinionDefaultHealthPoints = 200;
+        private const int MinionDefaultShotTimeout = 60;
 
-        public Minion(Texture2D objTexture, Rectangle rectangle) : base(objTexture, rectangle, MinionDefaultAttack, MinionDefaultHealthPoints)
+        public Minion(Texture2D objTexture, Rectangle rectangle)
+            : base(objTexture, rectangle, MinionDefaultAttack, MinionDefaultHealthPoints, MinionDefaultShotTimeout)
         {
+            
         }
 
         public override void Draw(SpriteBatch spriteBatch)

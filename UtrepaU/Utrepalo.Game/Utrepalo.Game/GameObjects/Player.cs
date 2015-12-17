@@ -76,16 +76,16 @@ namespace Utrepalo.Game.GameObjects
                 checkPostion.Y -= 2;
                 if (wallRec != null && checkPostion != wallRec)
                 {
-                    this.rectangle.Y -= 2;
+                    this.rectangle.Y -= 1;
                 }
             }
              if (state.IsKeyDown(Keys.Down))
             {
                 this.Direction = Direction.Down;
                 this.Speed = this.Speed;
-                this.MoveSprite(gameTime);
                 this.MoveDown(content);
-                rectangle.Y += 2;
+                this.MoveSprite(gameTime);
+                rectangle.Y += 1;
 
             }
             if (state.IsKeyDown(Keys.Left))
@@ -94,7 +94,7 @@ namespace Utrepalo.Game.GameObjects
                 this.Speed = this.Speed;
                 this.MoveSprite(gameTime);
                 this.MoveLeft(content);
-                rectangle.X -= 2;
+                rectangle.X -= 1;
             }
             if (state.IsKeyDown(Keys.Right))
             {
@@ -102,7 +102,7 @@ namespace Utrepalo.Game.GameObjects
                 this.Speed = this.Speed;
                 this.MoveSprite(gameTime);
                 this.MoveRight(content);
-                rectangle.X += 2;
+                rectangle.X += 1;
 
             }
             else
@@ -112,26 +112,6 @@ namespace Utrepalo.Game.GameObjects
             this.CheckBorderCollision();
 
         }
-
-        public override void RespondToCollision(GameObject hitObject)
-        {
-            base.RespondToCollision(hitObject);
-            
-        }
-
-        //public void TryToAddItemEffect(CollectibleItem item)
-        //{
-        //    if (this.HealthPoints == DefaultHealthPoints)
-        //    {
-        //        return;
-        //    }
-
-        //    this.HealthPoints += item.HealthEffect;
-        //    if (this.HealthPoints > DefaultHealthPoints)
-        //    {
-        //        this.HealthPoints = DefaultHealthPoints;
-        //    }
-        //}
 
         public override void Draw(SpriteBatch spriteBatch)
         {

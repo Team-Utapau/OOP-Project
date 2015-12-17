@@ -75,7 +75,7 @@ namespace Utrepalo.Game.GameObjects
             }
         }
 
-        public void Shoot(Direction direction)
+        public virtual void Shoot(Direction direction)
         {
             Rectangle bulletPosition;
             int rectangleBulletMinimizedWidth = 16;
