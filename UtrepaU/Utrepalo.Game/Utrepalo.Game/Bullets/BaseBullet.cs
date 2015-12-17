@@ -28,6 +28,7 @@ namespace Utrepalo.Game.Bullets
         public double Speed { get; private set; }
 
         public abstract void Shoot(Direction direction);
+        public bool isEnemyBullet { get; set; }
 
         public void Move()
         {
@@ -68,6 +69,7 @@ namespace Utrepalo.Game.Bullets
         {
             this.Move();
             this.CheckOutOfBounds();
+            this.CheckIfHit();
         }
 
         public override void RespondToCollision(GameObject hitObject)
@@ -95,6 +97,22 @@ namespace Utrepalo.Game.Bullets
                 {
                     this.State = GameObjectState.Destroyed;
                 }
+            }
+        }
+        private void CheckIfHit()
+        {
+            var creautures = GameEngine.GameObjects.Where(c => c is Creature).ToList();
+            foreach (var creauture in creautures)
+            {
+                var enemy = creauture as Creature;
+                if (this.Rectangle.Intersects(creauture.Rectangle))
+                {
+                    var player = GameEngine.GameObjects.FirstOrDefault(p => p is PlayerCharacter) as Player;
+
+                    enemy.HealthPoints -= player.Attack;
+                    this.State = GameObjectState.Destroyed;
+                }
+
             }
         }
     }

@@ -49,6 +49,7 @@ namespace Utrepalo.Game.GameObjects
             {
                 this.State=GameObjectState.Destroyed;;
             }
+
         }
 
         public override void RespondToCollision(GameObject hitObject)
@@ -56,13 +57,24 @@ namespace Utrepalo.Game.GameObjects
             if (hitObject is Character || hitObject is Wall)
             {
                 this.Rectangle = new Rectangle(
-                    (int) this.PreviousPosition.X,
-                    (int) this.PreviousPosition.Y,
+                    (int)this.PreviousPosition.X,
+                    (int)this.PreviousPosition.Y,
                     this.Rectangle.Width,
                     this.Rectangle.Height);
             }
 
-            base.RespondToCollision(hitObject);
+            var creature = hitObject as Character;
+
+            if (creature != null)
+            {
+                creature.HealthPoints -= this.Attack;
+                creature.State = GameObjectState.Damaged;
+            }
+
+            if (this.HealthPoints <= 0)
+            {
+                this.State = GameObjectState.Destroyed;
+            }
         }
 
         public void CheckBorderCollision()

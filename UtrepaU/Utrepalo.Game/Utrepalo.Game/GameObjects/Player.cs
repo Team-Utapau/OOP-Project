@@ -110,16 +110,14 @@ namespace Utrepalo.Game.GameObjects
                 this.Speed = 0;
             }
             this.CheckBorderCollision();
+
         }
 
-        //public override void RespondToCollision(GameObject hitObject)
-        //{
-        //    base.RespondToCollision(hitObject);
-        //    if (hitObject is CollectibleItem)
-        //    {
-        //        this.TryToAddItemEffect((CollectibleItem)hitObject);
-        //    }
-        //}
+        public override void RespondToCollision(GameObject hitObject)
+        {
+            base.RespondToCollision(hitObject);
+            
+        }
 
         //public void TryToAddItemEffect(CollectibleItem item)
         //{

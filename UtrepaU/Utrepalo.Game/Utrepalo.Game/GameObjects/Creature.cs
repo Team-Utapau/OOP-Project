@@ -1,150 +1,77 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Utrepalo.Game.Bullets;
-using Utrepalo.Game.Interfaces;
 
 namespace Utrepalo.Game.GameObjects
 {
-    using System;
-    using System.Collections.Generic;
-    using Game = Microsoft.Xna.Framework.Game;
+    using Enums;
+    using Walls;
+    using System.Linq;
 
-    public class Creature /*: GameObject, ICreature*/
+    public class Creature : Character
     {
-        //private IEnumerable<Upgrade> upgrades = new List<Upgrade>();
-        //public Texture2D bulletTexture;
-        //private int health;
-        //private int damage;
-        //private int armor;
-        //private float bulletDelay;
-        //private List<Bullet> bullets;
-        //private bool bulletAvailable;
-        //private int mapviewX;
-        //private int mapviewY;
+        private const int DefaultEnemyRange = 130;
 
-        //public Creature(Texture2D objTexture, Rectangle drowingRectangle, Rectangle sourceRectangle, SpriteBatch spriteBatch, int health, int damage, int armor, Game game)
-        //    : base(objTexture, drowingRectangle, sourceRectangle, spriteBatch, game)
-        //{
-        //    this.Health = health;
-        //    this.Damage = damage;
-        //    this.Armor = armor;
-        //    this.Upgrades = upgrades;
-        //    this.bullets = new List<Bullet>();
-        //}
+        public Creature(Texture2D objTexture, Rectangle rectangle, int attack, int healtPoints)
+                          : base(objTexture, rectangle, attack, healtPoints)
+        {
 
+        }
 
-        //public int Health { get; set; }
-        //public int Damage { get; set; }
-        //public int Armor { get; set; }
+        public override void Update()
+        {
+            var player = GameEngine.GameObjects.FirstOrDefault(p => p is PlayerCharacter) as Player;
 
-        //public IEnumerable<Upgrade> Upgrades
-        //{
-        //    get { return this.upgrades; }
-        //    set { this.upgrades = value; }
-        //}
+            // Left
+            if (this.Rectangle.Y - 20 <= player.Rectangle.Y && player.Rectangle.Y < this.Rectangle.Y)
+            {
+                if (this.Rectangle.X > player.Rectangle.X && player.Rectangle.X >= this.Rectangle.X - DefaultEnemyRange)
+                {
+                    this.Shoot(Direction.Left);
+                }
+                else if (this.Rectangle.X < player.Rectangle.X && player.Rectangle.X <= this.Rectangle.X + DefaultEnemyRange)
+                {
+                    this.Shoot(Direction.Right);
+                }
 
-        //public virtual void Attack()
-        //{
-        //    throw new NotImplementedException();
-        //}
+            }
+            if (this.Rectangle.X - 20 <= player.Rectangle.X && player.Rectangle.X < this.Rectangle.X)
+            {
+                if (this.Rectangle.Y > player.Rectangle.Y && player.Rectangle.Y >= this.Rectangle.Y - DefaultEnemyRange)
+                {
+                    this.Shoot(Direction.Up);
+                }
+                else if (this.Rectangle.Y < player.Rectangle.Y && player.Rectangle.Y <= this.Rectangle.Y + DefaultEnemyRange)
+                {
+                    this.Shoot(Direction.Down);
+                }
+            }
 
-        //public void Defence()
-        //{
-        //    throw new NotImplementedException();
-        //}
+        }
 
 
-        //public override void RespondToCollision(GameObject hitObject)
-        //{
-        //    throw new System.NotImplementedException();
-        //}
+        public override void RespondToCollision(GameObject hitObject)
+        {
+            if (hitObject is Character || hitObject is Wall)
+            {
+                this.Rectangle = new Rectangle(
+                    (int)this.PreviousPosition.X,
+                    (int)this.PreviousPosition.Y,
+                    this.Rectangle.Width,
+                    this.Rectangle.Height);
+            }
 
-        //public override void Draw(SpriteBatch spriteBatch)
-        //{
-        //    var isDraw = true;
+            var player = hitObject as PlayerCharacter;
 
-        //}
+            if (player != null)
+            {
+                player.HealthPoints -= this.Attack;
+                player.State = GameObjectState.Damaged;
+            }
 
-        //public void DrawCreature(SpriteBatch spriteBatch, int X, int Y)
-        //{
-        //    mapviewX = X;
-        //    mapviewY = Y;
-           
-        //    //spriteBatch.Draw(objTexture, new Vector2(250 - X, 250 - Y), SourceRectangle, Color.White);
-           
-        //    foreach (var bullet in bullets)
-        //    {
-        //        bullet.Draw(spriteBatch);
-        //    }
-            
-        //}
-
-        //public void Shoot(int X, int Y)
-        //{
-        //    if (bulletDelay >= 0)
-        //    {
-        //        bulletDelay--;
-        //    }
-        //    if (bulletDelay <= 0)
-        //    {
-        //        //var newBullet = new Bullet(bulletTexture);
-        //        //newBullet.position = new Vector2(250 - X, 250 - Y);
-        //        //newBullet.isVisible = true;
-        //        bulletAvailable = false;
-        //        if (bullets.Count < 1)
-        //        {
-        //           // bullets.Add(newBullet);
-        //        }
-        //    }
-        //    if (bulletDelay == 0)
-        //    {
-        //        bulletDelay = 1;
-        //    }
-        //}
-
-
-        //public void UpdateCreature(GameTime gameTime, int X, int Y)
-        //{
-        //    //this.SourceRectangle = new Rectangle(48, 0, 44, 46);
-        //    Shoot(X, Y);
-        //    UpdateBullets(X, Y);
-        //}
-
-        //public void UpdateBullets(int X, int Y)
-        //{
-        //    foreach (var bullet in bullets)
-        //    {
-                
-        //            if (X <= 0)
-        //            {
-        //                //bullet.position.X = bullet.position.X - 6;
-        //            }
-                    
-        //            //bullet.position.X = bullet.position.X - 4;
-
-        //        //if (bullet.position.X <= 50 - X)
-        //        //{
-        //        //    bullet.isVisible = false;
-        //        //    bulletAvailable = true;
-        //        //}
-        //    }
-        //    for (int i = 0; i < bullets.Count; i++)
-        //    {
-        //        //if (!bullets[i].isVisible)
-        //        //{
-        //        //    bullets.RemoveAt(i);
-        //        //    i--;
-        //        //}
-                
-        //    }
-        //}
-
-        //public void LoadContent(ContentManager content)
-        //{
-        //    //this.bulletTexture = content.Load<Texture2D>("images/bullet");
-        //    //this.ObjTexture = content.Load<Texture2D>("images/walkingLeftSprite");
-        //}
+            if (this.HealthPoints <= 0)
+            {
+                this.State = GameObjectState.Destroyed;
+            }
+        }
     }
 }

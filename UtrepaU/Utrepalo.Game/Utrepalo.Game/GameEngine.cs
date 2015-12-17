@@ -13,6 +13,7 @@ using Keys = Microsoft.Xna.Framework.Input.Keys;
 namespace Utrepalo.Game
 {
     using Bullets;
+    using GameObjects.Enemies;
     using GameObjects.Resources.Items;
     using Test;
 
@@ -30,6 +31,8 @@ namespace Utrepalo.Game
         public static Texture2D BasisWallTexture;
         public static Texture2D HealingPotionTexture;
         public static Texture2D CoinTexture;
+        public static Texture2D EnemyTexture;
+        public static Texture2D EnemyBulletTexture;
         private SpriteBatch spriteBatch;
         private GraphicsDeviceManager graphics;
 
@@ -67,6 +70,8 @@ namespace Utrepalo.Game
             HealingPotionTexture = this.Content.Load<Texture2D>("images/greenPotion");
             CoinTexture = this.Content.Load<Texture2D>("images/croppedCoin");
             MapTexture = this.Content.Load<Texture2D>("images/backgroundTest");
+            EnemyTexture = this.Content.Load<Texture2D>("images/enemy");
+            EnemyBulletTexture = this.Content.Load<Texture2D>("images/asteroids");
             GameObjects = MapLoader.LoadMap(this.spriteBatch);
 
         }
@@ -86,8 +91,8 @@ namespace Utrepalo.Game
                 var walls = GameObjects.Where(gameObject => !(gameObject is BaseBullet)).ToList();
                 var stoneWall = GameObjects.Where(c => c is StoneWall).ToList();
                 var ammo = GameObjects.Where(gameObject => gameObject is BaseBullet).ToList();
+                var creatures = GameObjects.Where(gameObject => gameObject is Creature).ToList();
 
-              
 
                 for (int i = 0; i < GameObjects.Count; i++)
                 {
@@ -99,23 +104,21 @@ namespace Utrepalo.Game
                         player.PlayerUpdate(gameTime, this.Content, wallRectangle);
                     
                     }
+                    
                    
                     GameObjects[i].Update();
                 }
+                for (int i = 0; i < creatures.Count; i++)
+                {
+                    creatures[i].RespondToCollision(CollisionHandler.GetCollisionInfo(creatures[i]));
 
+                }
+                GameObjects.RemoveAll(x => x.State == GameObjectState.Destroyed);
                 for (int i = 0; i < walls.Count; i++)
                 {
                     walls[i].RespondToCollision(CollisionHandler.GetCollisionInfo(walls[i]));
                 }
-                for (int i = 0; i < stoneWall.Count; i++)
-                {
-                    if (stoneWall[i]!=null)
-                    {
-                     
-                    }
-                    
-                }
-              
+               
           
                 for (int i = 0; i < ammo.Count; i++)
                 {
@@ -158,9 +161,18 @@ namespace Utrepalo.Game
             }
             foreach (var character in characters)
             {
-                var player = character as Player;
-                player.PlayerDrow(spriteBatch);
-                player.Draw(spriteBatch);
+                if (character is Player)
+                {
+                    var player = character as Player;
+                    player.PlayerDrow(spriteBatch);
+                    player.Draw(spriteBatch);
+                }
+                if (character is Warrior)
+                {
+                    var creature = character as Creature;
+                    creature.Draw(spriteBatch);
+                }
+                
             }
 
             foreach (var character in bullets)

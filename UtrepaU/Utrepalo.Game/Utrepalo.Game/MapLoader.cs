@@ -9,6 +9,7 @@ using Utrepalo.Game.Test;
 
 namespace Utrepalo.Game
 {
+    using GameObjects.Enemies;
     using GameObjects.Resources.Items;
 
     public class MapLoader
@@ -158,15 +159,15 @@ namespace Utrepalo.Game
 
                             //    gameObjects.Add(new ArmorConsumable(GameEngine.ArmorTexture, rect));
                             //    break;
-                            //case 'E':
-                            //    rect = new Rectangle(
-                            //        positionX - GameEngine.Offset,
-                            //        positionY - GameEngine.Offset,
-                            //        LargeTextureSize,
-                            //        LargeTextureSize);
+                            case 'E':
+                                rect = new Rectangle(
+                                    positionX - GameEngine.Offset,
+                                    positionY - GameEngine.Offset,
+                                    30,
+                                    30);
 
-                            //    gameObjects.Add(new HealthConsumable(GameEngine.HealthTexture, rect));
-                            //    break;
+                                gameObjects.Add(new Warrior(GameEngine.EnemyTexture, rect));
+                                break;
                             //case 'L':
                             //    rect = new Rectangle(
                             //        positionX - GameEngine.Offset,

@@ -7,6 +7,9 @@ using Utrepalo.Game.Interfaces;
 
 namespace Utrepalo.Game.GameObjects
 {
+    using System.Linq;
+    using Enemies;
+
     public abstract class Character : GameObject, IAttack, IDestroyable
     {
         protected Character(Texture2D objTexture, Rectangle rectangle, int attack, int healtPoints) : base(objTexture, rectangle)
@@ -17,7 +20,7 @@ namespace Utrepalo.Game.GameObjects
 
         public int Attack { get; protected set; }
 
-        public int HealthPoints { get; protected set; }
+        public int HealthPoints { get; protected internal set; }
 
         public Direction Direction { get; protected set; }
 
@@ -27,16 +30,41 @@ namespace Utrepalo.Game.GameObjects
 
         public override void RespondToCollision(GameObject hitObject)
         {
-            //if (hitObject is Ammunition)
-            //{
-            //    Ammunition ammunition = (Ammunition)hitObject;
-            //    this.HealthPoints -= Math.Max(0, ammunition.PhysicalAttack - this.PhysicalDefense);
-            //    this.State = GameObjectState.Damaged;
-            //}
-            //if (this.HealthPoints <= 0)
-            //{
-            //    this.State = GameObjectState.Destroyed;
-            //}
+            var currentType = this.GetType().Name;
+            var enemyType = "";
+            switch (currentType)
+            {
+                case "Warrior":
+                    enemyType = "Player";
+                    break;
+                case "Player":
+                    enemyType = "Warrior";
+                    break;
+
+                default:
+                    break;
+            }
+
+            if (hitObject is BaseBullet)
+            {
+                BaseBullet bullet = (BaseBullet)hitObject;
+                if (enemyType.Equals("Warrior"))
+                {
+                    var warrior = GameEngine.GameObjects.FirstOrDefault(w => w is Warrior) as Warrior;
+                    this.HealthPoints -= warrior.Attack;
+                }
+                else if (enemyType.Equals("Player"))
+                {
+                    var player = GameEngine.GameObjects.FirstOrDefault(w => w is Player) as Player;
+                    this.HealthPoints -= player.Attack;
+                }
+                this.State = GameObjectState.Damaged;
+            }
+
+            if (this.HealthPoints <= 0)
+            {
+                this.State = GameObjectState.Destroyed;
+            }
         }
 
         public void Shoot(Direction direction)
@@ -77,7 +105,17 @@ namespace Utrepalo.Game.GameObjects
                 default:
                     throw new Exception();
             }
-            GameEngine.GameObjects.Add(new Bullet(GameEngine.BulletTexture, bulletPosition, direction));
+            var currentType = this.GetType().Name;
+            switch (currentType)
+            {
+                case "Warrior":
+                    GameEngine.GameObjects.Add(new Bullet(GameEngine.EnemyBulletTexture, bulletPosition, direction));
+                    break;
+                case "Player":
+                    GameEngine.GameObjects.Add(new Bullet(GameEngine.BulletTexture, bulletPosition, direction));
+                    break;
+            }
+           
         }
     }
 }
