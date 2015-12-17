@@ -26,6 +26,7 @@ namespace Utrepalo.Game.MenuItem
             KeyboardController keyboardController = new KeyboardController();
             GameEngine game = new GameEngine(keyboardController);
             game.Run();
+            
         }
 
 
@@ -34,6 +35,7 @@ namespace Utrepalo.Game.MenuItem
             this.singlePlayerButton.Visible = false;
 
             this.exitButton.Visible = false;
+            
 
             Thread theThread = new Thread(this.StartGame);
             this.Close();

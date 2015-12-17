@@ -1,8 +1,8 @@
 wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-w     w      w         w  C   w        w
+w     w      w         w      w        w
 w  P  w           w       E   w        w
 w          wwwwwwwwwww   wwwwwwwwwwwwwww
-w     w    w             w     wC      w
+w     w    w             w     w       w
 w  wwwwwwwwwE            w     w   E   w
 w               wwwwwwwwww     wwwww   w
 w       wwwww   w                      w
@@ -11,13 +11,13 @@ wE      w T     w        w T      E    w
 w   wwwwwwwwwwwww     wwwwwwwwwwwwwwwwww
 w                     w                w
 www   wwwwwww   wwwwwww           wwwwww
-w           w     C         w          w
+w           w               w          w
 w           w    E      wwwwwwwwwww    ww
 w    E      wwwwwwwwwwwww              w
 w   wwwwww      w         E            w
 w        w    www   wwwwwwwwwwwwwwwwwwww
-w        w    T     w      Tw     C    w
+w        w    T     w      Tw          w
 w        wwwwwwwwwwww    wwww       wwww
-wwww                                   F w
-wC      w     w   w    w   w    B   w  w 
+wwww                    C              F w
+w       w     w   w    w   w    B   w  w 
 wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww

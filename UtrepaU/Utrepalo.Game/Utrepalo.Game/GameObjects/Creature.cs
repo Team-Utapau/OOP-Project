@@ -31,7 +31,7 @@ namespace Utrepalo.Game.GameObjects
             var player = GameEngine.GameObjects.FirstOrDefault(p => p is PlayerCharacter) as Player;
 
             // Left
-            if (this.Rectangle.Y - 20 <= player.Rectangle.Y && player.Rectangle.Y < this.Rectangle.Y+20)
+            if (player != null && (this.Rectangle.Y - 20 <= player.Rectangle.Y && player.Rectangle.Y < this.Rectangle.Y+20))
             {
                 if (this.Rectangle.X > player.Rectangle.X && player.Rectangle.X >= this.Rectangle.X - DefaultEnemyRange)
                 {
@@ -43,7 +43,7 @@ namespace Utrepalo.Game.GameObjects
                 }
 
             }
-            if (this.Rectangle.X - 20 <= player.Rectangle.X && player.Rectangle.X < this.Rectangle.X+20)
+            if (player != null && (this.Rectangle.X - 20 <= player.Rectangle.X && player.Rectangle.X < this.Rectangle.X+20))
             {
                 if (this.Rectangle.Y > player.Rectangle.Y && player.Rectangle.Y >= this.Rectangle.Y - DefaultEnemyRange)
                 {

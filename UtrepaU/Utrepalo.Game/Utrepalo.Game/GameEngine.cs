@@ -7,15 +7,20 @@ using Utrepalo.Game.Enums;
 using Utrepalo.Game.GameObjects;
 using Utrepalo.Game.GameObjects.Walls;
 using Utrepalo.Game.Interfaces;
-using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
-using Keys = Microsoft.Xna.Framework.Input.Keys;
 
 namespace Utrepalo.Game
 {
+    using System;
+    using System.Windows.Forms;
     using Bullets;
     using GameObjects.Enemies;
     using GameObjects.Resources.Items;
+    using MenuItem;
     using Test;
+    using Button = Buttons.Button;
+    using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
+    using Game = Microsoft.Xna.Framework.Game;
+    using Keys = Microsoft.Xna.Framework.Input.Keys;
 
     public class GameEngine : Microsoft.Xna.Framework.Game
     {
@@ -38,9 +43,14 @@ namespace Utrepalo.Game
         private SpriteBatch spriteBatch;
         private GraphicsDeviceManager graphics;
 
+        //Buttons
+        private Texture2D buttonTexture;
+        Button button;
+        Button buttonExit;
 
-        private bool isGameOver;
-        private bool isGameWon;
+
+        public  bool isGameOver;
+        public  bool isGameWon;
 
         private IController controller;
 
@@ -57,7 +67,7 @@ namespace Utrepalo.Game
         protected override void Initialize()
         {
             
-            //this.IsMouseVisible = true;
+           
             base.Initialize();
         }
 
@@ -77,6 +87,10 @@ namespace Utrepalo.Game
             BoykoTexture = this.Content.Load<Texture2D>("images/Boyko-TheBoss");
             BoykoBulletTexture = this.Content.Load<Texture2D>("images/boyko-bullet");
             GameObjects = MapLoader.LoadMap(this.spriteBatch);
+            buttonTexture = this.Content.Load<Texture2D>("images/button");
+
+            button = new Button(buttonTexture, Font, spriteBatch, "Restart");
+            buttonExit = new Button(buttonTexture, Font, spriteBatch, "Exit");
 
         }
         protected override void UnloadContent()
@@ -85,14 +99,16 @@ namespace Utrepalo.Game
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
-                Keyboard.GetState().IsKeyDown(Keys.Escape))
+                Keyboard.GetState().IsKeyDown(Keys.Escape)|| buttonExit.clicked)
             {
                 this.Exit();
             }
-            
-            if (true)
+            if (button.clicked)
             {
-                var walls = GameObjects.Where(gameObject => !(gameObject is BaseBullet)).ToList();
+                Application.Restart();
+            }
+
+            var walls = GameObjects.Where(gameObject => !(gameObject is BaseBullet)).ToList();
                 var stoneWall = GameObjects.Where(c => c is StoneWall).ToList();
                 var ammo = GameObjects.Where(gameObject => gameObject is BaseBullet).ToList();
                 var creatures = GameObjects.Where(gameObject => gameObject is Creature).ToList();
@@ -130,8 +146,12 @@ namespace Utrepalo.Game
                 }
 
                 GameObjects.RemoveAll(x => x.State == GameObjectState.Destroyed);
-            }
+            
             this.IsGameOver();
+            button.Location(WindowsWidth / 2 - 100, WindowsHeight / 2 - 100);
+            buttonExit.Location(WindowsWidth / 2 - 100, WindowsHeight / 2);
+            button.Update();
+            buttonExit.Update();
             base.Update(gameTime);
 
             this.controller.ProcessUserInput();
@@ -191,15 +211,29 @@ namespace Utrepalo.Game
             }
             if (isGameOver)
             {
+                
+                this.IsMouseVisible = true;
                 if (isGameWon)
                 {
-                    spriteBatch.DrawString(Font,"You Win!",new Vector2(500,320),Color.Red);
-                    
+                    spriteBatch.DrawString(Font, "You Win!", new Vector2(500, 220), Color.Red);
+                    if (!button.clicked)
+                    {
+                        button.Draw();
+                        buttonExit.Draw();
+
+                    }
                 }
                 else
                 {
-                    spriteBatch.DrawString(Font, "You Lose!", new Vector2(500, 320), Color.Red);
-                   
+                    spriteBatch.DrawString(Font, "You Lose!", new Vector2(500, 220), Color.Red);
+
+                    if (!button.clicked)
+                    {
+                        button.Draw();
+                        buttonExit.Draw();
+
+                    }
+
                 }
             }
             spriteBatch.End();

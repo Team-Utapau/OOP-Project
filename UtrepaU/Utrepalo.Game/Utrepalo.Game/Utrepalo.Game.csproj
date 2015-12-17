@@ -82,7 +82,7 @@
     <Compile Include="Enums\Direction.cs" />
     <Compile Include="Enums\GameObjectState.cs" />
     <Compile Include="Exceptions\InvalidObjectParametarException.cs" />
-    <Compile Include="GameObjects\Buttons\ExitButton.cs" />
+    <Compile Include="GameObjects\Buttons\Button.cs" />
     <Compile Include="GameObjects\Character.cs" />
     <Compile Include="GameObjects\Enemies\Boyko.cs" />
     <Compile Include="GameObjects\Enemies\Paladin.cs" />
