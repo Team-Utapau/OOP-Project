@@ -15,10 +15,5 @@ namespace Utrepalo.Game.Bullets
         {
             spriteBatch.Draw(this.objTexture, this.Rectangle, Color.White);
         }
-
-        public override void Shoot(Direction direction)
-        {
-
-        }
     }
 }

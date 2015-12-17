@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Utrepalo.Game.Enums;
 using Utrepalo.Game.GameObjects;
+using Utrepalo.Game.GameObjects.Enemies;
 using Utrepalo.Game.Interfaces;
 
 namespace Utrepalo.Game.Bullets
@@ -9,7 +10,7 @@ namespace Utrepalo.Game.Bullets
     using System.Linq;
     using Test;
 
-    public abstract class BaseBullet : GameObject, IAttack, IMovable
+    public abstract class BaseBullet : GameObject, IMovable
     {
         private const int DefaultSpeed = 6;
 
@@ -25,9 +26,8 @@ namespace Utrepalo.Game.Bullets
 
         public Direction Direction { get; protected set; }
 
-        public double Speed { get; private set; }
-
-        public abstract void Shoot(Direction direction);
+        public double Speed { get; protected set; }
+        
         public bool isEnemyBullet { get; set; }
 
         public void Move()
@@ -74,22 +74,14 @@ namespace Utrepalo.Game.Bullets
 
         public override void RespondToCollision(GameObject hitObject)
         {
-            //if (hitObject is Character || hitObject is Obstacle)
-            //{
-            //    this.State = GameObjectState.Destroyed;
-            //    SoundHandler.HandleDestroyObjectSoundEffect();
-            //}
+            if (hitObject is Character)
+            {
+                this.State = GameObjectState.Destroyed;
+            }
         }
 
         private void CheckOutOfBounds()
         {
-            //if (this.Rectangle.X < -GameEngine.Offset ||
-            //    this.Rectangle.X > GameEngine.WindowsWidth + GameEngine.Offset ||
-            //    this.Rectangle.Y < -GameEngine.Offset ||
-            //    this.Rectangle.Y > GameEngine.WindowsHeight + GameEngine.Offset)
-            //{
-            //    this.State = GameObjectState.Destroyed;
-            //}
             var walls = GameEngine.GameObjects.Where(c => c is StoneWall).ToList();
             foreach (var wall in walls)
             {
@@ -102,17 +94,20 @@ namespace Utrepalo.Game.Bullets
         private void CheckIfHit()
         {
             var creautures = GameEngine.GameObjects.Where(c => c is Creature).ToList();
+            var player = GameEngine.GameObjects.FirstOrDefault(p => p is PlayerCharacter) as Player;
             foreach (var creauture in creautures)
             {
                 var enemy = creauture as Creature;
                 if (this.Rectangle.Intersects(creauture.Rectangle))
                 {
-                    var player = GameEngine.GameObjects.FirstOrDefault(p => p is PlayerCharacter) as Player;
-
                     enemy.HealthPoints -= player.Attack;
                     this.State = GameObjectState.Destroyed;
                 }
-
+            }
+            if (this.Rectangle.Intersects(player.Rectangle))
+            {
+                var creature = creautures.First() as Warrior;
+                player.HealthPoints -= creature.Attack;
             }
         }
     }

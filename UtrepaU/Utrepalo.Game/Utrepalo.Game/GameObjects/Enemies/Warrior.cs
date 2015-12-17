@@ -8,10 +8,11 @@ namespace Utrepalo.Game.GameObjects.Enemies
 
     public class Warrior : Creature
     {
-        private const int WarriorDefaultAttack = 150;
+        private const int WarriorDefaultAttack = 20;
         private const int WarriorDefaultHealthPoints = 300;
+        private const int WarriorDefaultShotTimeout = 60;
 
-        public Warrior(Texture2D objTexture, Rectangle rectangle) : base(objTexture, rectangle, WarriorDefaultAttack, WarriorDefaultHealthPoints)
+        public Warrior(Texture2D objTexture, Rectangle rectangle) : base(objTexture, rectangle, WarriorDefaultAttack, WarriorDefaultHealthPoints, WarriorDefaultShotTimeout)
         {
         }
 

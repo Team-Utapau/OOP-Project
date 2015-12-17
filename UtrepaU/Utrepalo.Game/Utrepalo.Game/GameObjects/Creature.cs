@@ -9,13 +9,17 @@ namespace Utrepalo.Game.GameObjects
 
     public class Creature : Character
     {
+        private int shotTimeout;
+
         private const int DefaultEnemyRange = 130;
 
-        public Creature(Texture2D objTexture, Rectangle rectangle, int attack, int healtPoints)
-                          : base(objTexture, rectangle, attack, healtPoints)
+        public Creature(Texture2D objTexture, Rectangle rectangle, int attack, int healtPoints, int timeBetweenShots) : base(objTexture, rectangle, attack, healtPoints)
         {
-
+            this.TimeBetweenShot = timeBetweenShots;
+            this.shotTimeout = this.TimeBetweenShot;
         }
+
+        protected int TimeBetweenShot { get; set; }
 
         public override void Update()
         {
@@ -48,6 +52,23 @@ namespace Utrepalo.Game.GameObjects
 
         }
 
+        private void OpenFiringSequence(Direction direction)
+        {
+            this.shotTimeout--;
+
+            if (this.shotTimeout <= 0)
+            {
+                //this.Speed = 0;
+                this.Direction = direction;
+                base.Shoot(direction);
+                this.shotTimeout = this.TimeBetweenShot;
+            }
+        }
+
+        public override void Shoot(Direction direction)
+        {
+            this.OpenFiringSequence(direction);
+        }
 
         public override void RespondToCollision(GameObject hitObject)
         {
