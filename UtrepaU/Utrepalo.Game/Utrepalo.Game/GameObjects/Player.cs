@@ -21,7 +21,6 @@ namespace Utrepalo.Game.GameObjects
         private double delay = 200;
         private Rectangle sourceRectangle;
 
-        private List<CollectibleItem> inventory = new List<CollectibleItem>();
 
         public Player(Texture2D objTexture, Rectangle rectangle) : base(objTexture, rectangle, DefaultAttack, DefaultHealthPoints)
         {
@@ -30,14 +29,7 @@ namespace Utrepalo.Game.GameObjects
             this.IsVisible = true;
         }
 
-        public List<CollectibleItem> Inventory
-        {
-            get
-            {
-                return this.inventory;
-            }
-            protected set { this.inventory = value; }
-        }
+      
 
         public double BaseSpeed { get; set; }
 
@@ -62,7 +54,7 @@ namespace Utrepalo.Game.GameObjects
             {
                 this.HasShot = false;
             }
-            this.inventory.RemoveAll(x => x.ItemState == CollectibleItemState.Collected);
+
             base.Update();
         }
         
@@ -120,35 +112,35 @@ namespace Utrepalo.Game.GameObjects
             this.CheckBorderCollision();
         }
 
-        public override void RespondToCollision(GameObject hitObject)
-        {
-            base.RespondToCollision(hitObject);
-            if (hitObject is CollectibleItem)
-            {
-                this.TryToAddItemEffect((CollectibleItem)hitObject);
-            }
-        }
+        //public override void RespondToCollision(GameObject hitObject)
+        //{
+        //    base.RespondToCollision(hitObject);
+        //    if (hitObject is CollectibleItem)
+        //    {
+        //        this.TryToAddItemEffect((CollectibleItem)hitObject);
+        //    }
+        //}
 
-        public void TryToAddItemEffect(CollectibleItem item)
-        {
-            if (this.HealthPoints == DefaultHealthPoints)
-            {
-                return;
-            }
+        //public void TryToAddItemEffect(CollectibleItem item)
+        //{
+        //    if (this.HealthPoints == DefaultHealthPoints)
+        //    {
+        //        return;
+        //    }
 
-            this.HealthPoints += item.HealthEffect;
-            if (this.HealthPoints > DefaultHealthPoints)
-            {
-                this.HealthPoints = DefaultHealthPoints;
-            }
-        }
+        //    this.HealthPoints += item.HealthEffect;
+        //    if (this.HealthPoints > DefaultHealthPoints)
+        //    {
+        //        this.HealthPoints = DefaultHealthPoints;
+        //    }
+        //}
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-
+            var coinsNeeded = 10;
             spriteBatch.DrawString(
                 GameEngine.Font,
-                string.Format("Health: {0}\nCoins: {1}/10", this.HealthPoints,this.Coins),
+                string.Format("Health: {0}\nCoins: {1}/{2}", this.HealthPoints,this.Coins,coinsNeeded),
                 new Vector2(GameEngine.WindowsWidth- 250, 21),
                 Color.DarkRed);
           

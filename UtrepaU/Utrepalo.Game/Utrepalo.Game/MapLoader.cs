@@ -55,7 +55,7 @@ namespace Utrepalo.Game
                                 rect = new Rectangle(
                                     positionX -60,
                                     positionY,
-                                    40,
+                                    LargeTextureSize,
                                     LargeTextureSize);
 
                                 gameObjects.Add(new StoneWall(GameEngine.BasisWallTexture, rect));

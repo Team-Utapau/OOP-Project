@@ -64,12 +64,9 @@ namespace Utrepalo.Game
             PlayerTexture = this.Content.Load<Texture2D>("images/walkingDownSprite");
             BasisWallTexture = this.Content.Load<Texture2D>("images/Wall");
             BulletTexture = this.Content.Load<Texture2D>("images/fireballSprite");
-            HealthTexture = this.Content.Load<Texture2D>("images/dot");
             HealingPotionTexture = this.Content.Load<Texture2D>("images/greenPotion");
             CoinTexture = this.Content.Load<Texture2D>("images/croppedCoin");
-            
             MapTexture = this.Content.Load<Texture2D>("images/backgroundTest");
-
             GameObjects = MapLoader.LoadMap(this.spriteBatch);
 
         }
@@ -86,9 +83,8 @@ namespace Utrepalo.Game
             
             if (true)
             {
-                var walls = GameObjects.Where(gameObject => !(gameObject is BaseBullet) && !(gameObject is CollectibleItem)).ToList();
+                var walls = GameObjects.Where(gameObject => !(gameObject is BaseBullet)).ToList();
                 var stoneWall = GameObjects.Where(c => c is StoneWall).ToList();
-                var collectibles = GameObjects.Where(gameObject => gameObject is CollectibleItem).ToList();
                 var ammo = GameObjects.Where(gameObject => gameObject is BaseBullet).ToList();
 
               
@@ -120,11 +116,7 @@ namespace Utrepalo.Game
                     
                 }
               
-                for (int i = 0; i < collectibles.Count; i++)
-                {
-                    collectibles[i].RespondToCollision(CollisionHandler.GetCollisionInfo(collectibles[i]));
-                }
-
+          
                 for (int i = 0; i < ammo.Count; i++)
                 {
                     ammo[i].RespondToCollision(CollisionHandler.GetCollisionInfo(ammo[i]));

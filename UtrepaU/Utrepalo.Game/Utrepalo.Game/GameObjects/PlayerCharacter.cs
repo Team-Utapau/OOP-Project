@@ -49,7 +49,6 @@ namespace Utrepalo.Game.GameObjects
             {
                 this.State=GameObjectState.Destroyed;;
             }
-            this.CheckBorderCollision();
         }
 
         public override void RespondToCollision(GameObject hitObject)
@@ -77,7 +76,7 @@ namespace Utrepalo.Game.GameObjects
                 if (coin.Rectangle.Intersects(this.Rectangle))
                 {
                     coin.State=GameObjectState.Destroyed;
-                    this.Coins += 1;
+                    this.Coins += 2;
                 }
             }
             foreach (var wall in walls)

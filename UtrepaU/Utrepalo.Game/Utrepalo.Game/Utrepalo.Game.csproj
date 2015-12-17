@@ -93,7 +93,6 @@
     <Compile Include="GameObjects\Player.cs" />
     <Compile Include="GameObjects\PlayerCharacter.cs" />
     <Compile Include="GameObjects\Resources\Items\Coin.cs" />
-    <Compile Include="GameObjects\Resources\Items\CollectibleItem.cs" />
     <Compile Include="GameObjects\Resources\Items\HealingPotion.cs" />
     <Compile Include="GameObjects\Resources\Resource.cs" />
     <Compile Include="GameObjects\Talent.cs" />
@@ -112,7 +111,6 @@
     <Compile Include="KeyboardController.cs" />
     <Compile Include="KeyboardHandler\KeyboardController.cs" />
     <Compile Include="MapLoader.cs" />
-    <Compile Include="Maps\WorldMap.cs" />
     <Compile Include="MenuItem\BackButton.cs">
       <SubType>Form</SubType>
     </Compile>
