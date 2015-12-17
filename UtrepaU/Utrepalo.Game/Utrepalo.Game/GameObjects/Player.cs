@@ -13,7 +13,7 @@ namespace Utrepalo.Game.GameObjects
 
     public class Player : PlayerCharacter
     {
-        private const int DefaultAttack = 200;
+        private const int DefaultAttack = 20;
         private const int DefaultHealthPoints = 500;
         private const double DefaultSpeed = 3;
         private float elapsed;

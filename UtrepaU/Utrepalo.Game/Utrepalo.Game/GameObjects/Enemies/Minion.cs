@@ -6,12 +6,12 @@ namespace Utrepalo.Game.GameObjects.Enemies
 {
     using System.Collections.Generic;
 
-    public class Warrior : Creature
+    public class Minion : Creature
     {
-        private const int WarriorDefaultAttack = 150;
-        private const int WarriorDefaultHealthPoints = 300;
+        private const int MinionDefaultAttack = 150;
+        private const int MinionDefaultHealthPoints = 300;
 
-        public Warrior(Texture2D objTexture, Rectangle rectangle) : base(objTexture, rectangle, WarriorDefaultAttack, WarriorDefaultHealthPoints)
+        public Minion(Texture2D objTexture, Rectangle rectangle) : base(objTexture, rectangle, MinionDefaultAttack, MinionDefaultHealthPoints)
         {
         }
 

@@ -40,6 +40,9 @@ namespace Utrepalo.Game.GameObjects
                 case "Player":
                     enemyType = "Warrior";
                     break;
+                case "Boyko":
+                    enemyType = "Player";
+                    break;
 
                 default:
                     break;
@@ -48,10 +51,15 @@ namespace Utrepalo.Game.GameObjects
             if (hitObject is BaseBullet)
             {
                 BaseBullet bullet = (BaseBullet)hitObject;
-                if (enemyType.Equals("Warrior"))
+                if (enemyType.Equals("Minion"))
                 {
-                    var warrior = GameEngine.GameObjects.FirstOrDefault(w => w is Warrior) as Warrior;
+                    var warrior = GameEngine.GameObjects.FirstOrDefault(w => w is Minion) as Minion;
                     this.HealthPoints -= warrior.Attack;
+                }
+                if (enemyType.Equals("Minion"))
+                {
+                    var boyko = GameEngine.GameObjects.FirstOrDefault(w => w is Boyko) as Boyko;
+                    this.HealthPoints -= boyko.Attack;
                 }
                 else if (enemyType.Equals("Player"))
                 {
@@ -70,8 +78,8 @@ namespace Utrepalo.Game.GameObjects
         public void Shoot(Direction direction)
         {
             Rectangle bulletPosition;
-            int rectangleBulletMinimizedWidth = this.Rectangle.Width / 2;
-            int rectangleBulletMinimizedHeight = this.Rectangle.Height / 2;
+            int rectangleBulletMinimizedWidth = 16;
+            int rectangleBulletMinimizedHeight = 16;
             switch (direction)
             {
                 case Direction.Down:
@@ -108,12 +116,16 @@ namespace Utrepalo.Game.GameObjects
             var currentType = this.GetType().Name;
             switch (currentType)
             {
-                case "Warrior":
+                case "Minion":
                     GameEngine.GameObjects.Add(new Bullet(GameEngine.EnemyBulletTexture, bulletPosition, direction));
+                    break;
+                case "Boyko":
+                    GameEngine.GameObjects.Add(new Bullet(GameEngine.BoykoBulletTexture, bulletPosition, direction));
                     break;
                 case "Player":
                     GameEngine.GameObjects.Add(new Bullet(GameEngine.BulletTexture, bulletPosition, direction));
                     break;
+
             }
            
         }

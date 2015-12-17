@@ -61,15 +61,15 @@ namespace Utrepalo.Game
 
                                 gameObjects.Add(new StoneWall(GameEngine.BasisWallTexture, rect));
                                 break;
-                            //case 'B':
-                            //    rect = new Rectangle(
-                            //        positionX - GameEngine.Offset,
-                            //        positionY - GameEngine.Offset,
-                            //        LargeTextureSize,
-                            //        LargeTextureSize);
+                            case 'B':
+                                rect = new Rectangle(
+                                    positionX - GameEngine.Offset-7,
+                                    positionY - GameEngine.Offset-5,
+                                    50,
+                                    50);
 
-                            //    gameObjects.Add(new Bush(GameEngine.BasicBushTexture, rect));
-                            //    break;
+                                gameObjects.Add(new Boyko(GameEngine.BoykoTexture, rect));
+                                break;
                             //case 'I':
                             //    rect = new Rectangle(
                             //        positionX - GameEngine.Offset,
@@ -166,7 +166,7 @@ namespace Utrepalo.Game
                                     30,
                                     30);
 
-                                gameObjects.Add(new Warrior(GameEngine.EnemyTexture, rect));
+                                gameObjects.Add(new Minion(GameEngine.EnemyTexture, rect));
                                 break;
                             //case 'L':
                             //    rect = new Rectangle(

@@ -84,10 +84,10 @@
     <Compile Include="Exceptions\InvalidObjectParametarException.cs" />
     <Compile Include="GameObjects\Buttons\ExitButton.cs" />
     <Compile Include="GameObjects\Character.cs" />
+    <Compile Include="GameObjects\Enemies\Boyko.cs" />
     <Compile Include="GameObjects\Enemies\Mage.cs" />
     <Compile Include="GameObjects\Enemies\Paladin.cs" />
-    <Compile Include="GameObjects\Enemies\Shaman.cs" />
-    <Compile Include="GameObjects\Enemies\Warrior.cs" />
+    <Compile Include="GameObjects\Enemies\Minion.cs" />
     <Compile Include="GameObjects\Creature.cs" />
     <Compile Include="GameObjects\GameObject.cs" />
     <Compile Include="GameObjects\Player.cs" />

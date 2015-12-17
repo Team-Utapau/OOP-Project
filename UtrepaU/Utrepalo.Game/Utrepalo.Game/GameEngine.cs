@@ -33,6 +33,8 @@ namespace Utrepalo.Game
         public static Texture2D CoinTexture;
         public static Texture2D EnemyTexture;
         public static Texture2D EnemyBulletTexture;
+        public static Texture2D BoykoTexture;
+        public static Texture2D BoykoBulletTexture;
         private SpriteBatch spriteBatch;
         private GraphicsDeviceManager graphics;
 
@@ -72,6 +74,8 @@ namespace Utrepalo.Game
             MapTexture = this.Content.Load<Texture2D>("images/backgroundTest");
             EnemyTexture = this.Content.Load<Texture2D>("images/enemy");
             EnemyBulletTexture = this.Content.Load<Texture2D>("images/asteroids");
+            BoykoTexture = this.Content.Load<Texture2D>("images/Boyko-TheBoss");
+            BoykoBulletTexture = this.Content.Load<Texture2D>("images/boyko-bullet");
             GameObjects = MapLoader.LoadMap(this.spriteBatch);
 
         }
@@ -143,6 +147,7 @@ namespace Utrepalo.Game
             var bullets = GameObjects.Where(gameObject => gameObject is BaseBullet);
             var healingPotions = GameObjects.Where(c => c is HealingPotion).ToList();
             var coins = GameObjects.Where(c => c is Coin).ToList();
+
            
 
             foreach (var character in walls)
@@ -167,12 +172,17 @@ namespace Utrepalo.Game
                     player.PlayerDrow(spriteBatch);
                     player.Draw(spriteBatch);
                 }
-                if (character is Warrior)
+                if (character is Minion)
                 {
                     var creature = character as Creature;
                     creature.Draw(spriteBatch);
                 }
-                
+                if (character is Boyko)
+                {
+                    var creature = character as Creature;
+                    creature.Draw(spriteBatch);
+                }
+
             }
 
             foreach (var character in bullets)
