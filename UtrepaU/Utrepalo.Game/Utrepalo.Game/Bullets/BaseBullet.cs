@@ -100,14 +100,14 @@ namespace Utrepalo.Game.Bullets
                 var enemy = creauture as Creature;
                 if (this.Rectangle.Intersects(creauture.Rectangle))
                 {
-                    enemy.HealthPoints -= player.Attack;
+                    if (enemy != null) if (player != null) enemy.HealthPoints -= player.Attack;
                     this.State = GameObjectState.Destroyed;
                 }
             }
-            if (this.Rectangle.Intersects(player.Rectangle))
+            if (player != null && this.Rectangle.Intersects(player.Rectangle))
             {
                 var creature = creautures.First() as Minion;
-                player.HealthPoints -= creature.Attack;
+                if (creature != null) player.HealthPoints -= creature.Attack;
             }
         }
     }

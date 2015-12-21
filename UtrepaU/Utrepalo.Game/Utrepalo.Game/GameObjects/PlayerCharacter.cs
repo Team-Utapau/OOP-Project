@@ -7,7 +7,7 @@ using Utrepalo.Game.Interfaces;
 namespace Utrepalo.Game.GameObjects
 {
     using Resources.Items;
-    using Utrepalo.Game.Enums;
+    using Enums;
     using Walls;
 
     public abstract class PlayerCharacter : Character, IMovable
@@ -15,7 +15,7 @@ namespace Utrepalo.Game.GameObjects
         private double speed;
         private int coins;
 
-        public PlayerCharacter(Texture2D objTexture, Rectangle rectangle, int attack, int healtPoints)
+        protected PlayerCharacter(Texture2D objTexture, Rectangle rectangle, int attack, int healtPoints)
             : base(objTexture, rectangle, attack, healtPoints)
         {
             this.Speed = speed;

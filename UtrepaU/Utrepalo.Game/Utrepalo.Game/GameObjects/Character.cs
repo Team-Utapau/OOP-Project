@@ -34,7 +34,7 @@ namespace Utrepalo.Game.GameObjects
             var enemyType = "";
             switch (currentType)
             {
-                case "Warrior":
+                case "Minion":
                     enemyType = "Player";
                     break;
                 case "Player":
@@ -54,17 +54,17 @@ namespace Utrepalo.Game.GameObjects
                 if (enemyType.Equals("Minion"))
                 {
                     var warrior = GameEngine.GameObjects.FirstOrDefault(w => w is Minion) as Minion;
-                    this.HealthPoints -= warrior.Attack;
+                    if (warrior != null) this.HealthPoints -= warrior.Attack;
                 }
-                if (enemyType.Equals("Minion"))
+                if (enemyType.Equals("Boyko"))
                 {
                     var boyko = GameEngine.GameObjects.FirstOrDefault(w => w is Boyko) as Boyko;
-                    this.HealthPoints -= boyko.Attack;
+                    if (boyko != null) this.HealthPoints -= boyko.Attack;
                 }
                 else if (enemyType.Equals("Player"))
                 {
                     var player = GameEngine.GameObjects.FirstOrDefault(w => w is Player) as Player;
-                    this.HealthPoints -= player.Attack;
+                    if (player != null) this.HealthPoints -= player.Attack;
                 }
                 this.State = GameObjectState.Damaged;
             }
