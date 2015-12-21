@@ -1,18 +1,24 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Utrepalo.Game.GameObjects.Walls;
 
-namespace Utrepalo.Game.Test
+namespace Utrepalo.Game.GameObjects.Walls
 {
     public class StoneWall : Wall
     {
-        //private const int DefaultHealthPoints = 250;
 
         public StoneWall(Texture2D objTexture, Rectangle rectangle)
             : base(objTexture, rectangle)
         {
-            //this.HealthPoints = DefaultHealthPoints;
         }
 
+        public override void Update()
+        {
+            
+        }
+
+        public override void RespondToCollision(GameObject hitObject)
+        {
+       
+        }
     }
 }

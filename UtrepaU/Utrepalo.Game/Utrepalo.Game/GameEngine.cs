@@ -10,17 +10,13 @@ using Utrepalo.Game.Interfaces;
 
 namespace Utrepalo.Game
 {
-    using System;
     using System.Windows.Forms;
     using Bullets;
     using GameObjects.Enemies;
     using GameObjects.Resources.Items;
-    using MenuItem;
-    using Test;
     using Button = Buttons.Button;
     using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
-    using Game = Microsoft.Xna.Framework.Game;
-    using Keys = Microsoft.Xna.Framework.Input.Keys;
+    using Keys = Keys;
 
     public class GameEngine : Microsoft.Xna.Framework.Game
     {
@@ -119,10 +115,13 @@ namespace Utrepalo.Game
                     if (GameObjects[i] is Player)
                     {
                         var player = GameObjects[i] as Player;
-                        var wallRectangle = walls.FirstOrDefault(w => w.Rectangle.Intersects(player.Rectangle)).Rectangle;
+                        var wall = walls.FirstOrDefault(w => w.Rectangle.Intersects(player.Rectangle));
+                        if (wall != null)
+                        {
+                            var wallRectangle = wall.Rectangle;
 
-                        player.PlayerUpdate(gameTime, this.Content, wallRectangle);
-                    
+                            player.PlayerUpdate(gameTime, this.Content, wallRectangle);
+                        }
                     }
                     
                    
@@ -254,7 +253,7 @@ namespace Utrepalo.Game
             if (!areCoinsLeft)
             {
                 var player = GameObjects.FirstOrDefault(c => c is Player);
-                if (player.Rectangle.X >= 1200)
+                if (player != null && player.Rectangle.X >= 1200)
                 {
                     this.isGameOver = true;
                     this.isGameWon = true;

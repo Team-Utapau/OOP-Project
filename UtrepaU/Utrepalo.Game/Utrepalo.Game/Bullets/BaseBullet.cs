@@ -3,12 +3,12 @@ using Microsoft.Xna.Framework.Graphics;
 using Utrepalo.Game.Enums;
 using Utrepalo.Game.GameObjects;
 using Utrepalo.Game.GameObjects.Enemies;
+using Utrepalo.Game.GameObjects.Walls;
 using Utrepalo.Game.Interfaces;
 
 namespace Utrepalo.Game.Bullets
 {
     using System.Linq;
-    using Test;
 
     public abstract class BaseBullet : GameObject, IMovable
     {
@@ -28,7 +28,7 @@ namespace Utrepalo.Game.Bullets
 
         public double Speed { get; protected set; }
         
-        public bool isEnemyBullet { get; set; }
+        public bool IsEnemyBullet { get; set; }
 
         public void Move()
         {

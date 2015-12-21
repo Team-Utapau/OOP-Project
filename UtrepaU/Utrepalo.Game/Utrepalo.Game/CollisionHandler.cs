@@ -6,8 +6,6 @@ using Utrepalo.Game.GameObjects.Walls;
 
 namespace Utrepalo.Game
 {
-    using Test;
-
     public static class CollisionHandler
     {
         public static GameObject GetCollisionInfo(GameObject obj)
@@ -26,7 +24,7 @@ namespace Utrepalo.Game
         public static bool ObstaclesObstructingView(Rectangle rect)
         {
             var obstacles = GameEngine.GameObjects.Where(
-                    gameObject => (gameObject is Wall /*|| gameObject is EnemyTank || gameObject is Bunker*/) && gameObject.Rectangle.Intersects(rect));
+                    gameObject => (gameObject is Wall) && gameObject.Rectangle.Intersects(rect));
 
             return obstacles.Any();
         }

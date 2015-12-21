@@ -63,7 +63,6 @@ namespace Utrepalo.Game.GameObjects
 
             if (this.shotTimeout <= 0)
             {
-                //this.Speed = 0;
                 this.Direction = direction;
                 base.Shoot(direction);
                 this.shotTimeout = this.TimeBetweenShot;

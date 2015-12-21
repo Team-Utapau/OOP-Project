@@ -11,11 +11,6 @@ namespace Utrepalo.Game
         [STAThread]
         static void Main()
         {
-            //var controller = new KeyboardController();
-            //using (GameEngine game = new GameEngine(controller))
-            //{
-            //    game.Run();
-            //}
             var menu = new MainGameMenu();
             menu.ShowDialog();
         }

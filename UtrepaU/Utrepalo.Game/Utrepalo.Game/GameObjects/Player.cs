@@ -63,7 +63,6 @@ namespace Utrepalo.Game.GameObjects
             KeyboardState state = Keyboard.GetState();
             this.Update();
             this.sourceRectangle = new Rectangle(48 * frame, 0, 44, 46);
-            Rectangle checkPostion;
 
 
             if (state.IsKeyDown(Keys.Up))
@@ -72,7 +71,7 @@ namespace Utrepalo.Game.GameObjects
                 this.Speed = this.Speed;
                 this.MoveSprite(gameTime);
                 this.MoveUp(content);
-                checkPostion = this.rectangle;
+                var checkPostion = this.rectangle;
                 checkPostion.Y -= 2;
                 if (wallRec != null && checkPostion != wallRec)
                 {

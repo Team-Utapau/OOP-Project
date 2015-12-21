@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Utrepalo.Game.GameObjects;
 using Utrepalo.Game.GameObjects.Walls;
-using Utrepalo.Game.Test;
 
 namespace Utrepalo.Game
 {
@@ -14,23 +13,9 @@ namespace Utrepalo.Game
 
     public class MapLoader
     {
-        public static List<GameObject> LoadMap(SpriteBatch spriteBatch/*, GameLevel level*/)
+        public static List<GameObject> LoadMap(SpriteBatch spriteBatch)
         {
             string map = @"../../../Resources/mapFinal.txt";
-            //switch (level)
-            //{
-            //    case GameLevel.Easy:
-            //        map = @"../../../Resources/Maps/Map_TrainingFields.txt";
-            //        break;
-            //    case GameLevel.Medium:
-            //        map = @"../../../Resources/Maps/Map_OnEnemyTerritory.txt";
-            //        break;
-            //    case GameLevel.Hard:
-            //        map = @"../../../Resources/Maps/Map_Glory.txt";
-            //        break;
-            //    default:
-            //        throw new MapNotFoundException("The specified map is not implemented.");
-            //}
 
             List<GameObject> gameObjects = new List<GameObject>();
 
@@ -41,7 +26,7 @@ namespace Utrepalo.Game
                     int positionY = 0;
                     int positionX = 0;
 
-                    const int LargeTextureSize = 30;
+                    const int largeTextureSize = 30;
 
                     string line = sr.ReadToEnd();
 
@@ -56,8 +41,8 @@ namespace Utrepalo.Game
                                 rect = new Rectangle(
                                     positionX -60,
                                     positionY,
-                                    LargeTextureSize,
-                                    LargeTextureSize);
+                                    largeTextureSize,
+                                    largeTextureSize);
 
                                 gameObjects.Add(new StoneWall(GameEngine.BasisWallTexture, rect));
                                 break;
@@ -70,15 +55,6 @@ namespace Utrepalo.Game
 
                                 gameObjects.Add(new Boyko(GameEngine.BoykoTexture, rect));
                                 break;
-                            //case 'I':
-                            //    rect = new Rectangle(
-                            //        positionX - GameEngine.Offset,
-                            //        positionY - GameEngine.Offset,
-                            //        LargeTextureSize,
-                            //        LargeTextureSize);
-
-                            //    gameObjects.Add(new SpeedPowerUp(GameEngine.SpeedPowerUpTexture, rect));
-                            //    break;
                             case 'P':
                                 rect = new Rectangle(
                                     positionX ,
@@ -105,60 +81,6 @@ namespace Utrepalo.Game
 
                                 gameObjects.Add(new Coin(GameEngine.CoinTexture, rect));
                                 break;
-                            //case 'S':
-                            //    rect = new Rectangle(
-                            //        positionX - GameEngine.Offset,
-                            //        positionY - GameEngine.Offset,
-                            //        LargeTextureSize,
-                            //        LargeTextureSize);
-
-                            //    gameObjects.Add(new StrongTank(GameEngine.BasicTankTexture, rect));
-                            //    break;
-                            //case 'O':
-                            //    rect = new Rectangle(
-                            //        positionX - GameEngine.Offset,
-                            //        positionY - GameEngine.Offset,
-                            //        SmallTextureSize,
-                            //        SmallTextureSize);
-
-                            //    gameObjects.Add(new BossTank(GameEngine.PlayerTankTexture, rect));
-                            //    break;
-                            //case 'U':
-                            //    rect = new Rectangle(
-                            //        positionX - GameEngine.Offset,
-                            //        positionY - GameEngine.Offset,
-                            //        LargeTextureSize,
-                            //        LargeTextureSize);
-
-                            //    gameObjects.Add(new BasicBunker(GameEngine.BunkerTexture, rect));
-                            //    break;
-                            //case 'R':
-                            //    rect = new Rectangle(
-                            //        positionX - GameEngine.Offset,
-                            //        positionY - GameEngine.Offset,
-                            //        LargeTextureSize,
-                            //        LargeTextureSize);
-
-                            //    gameObjects.Add(new FortifiedBunker(GameEngine.BunkerTexture, rect));
-                            //    break;
-                            //case 'H':
-                            //    rect = new Rectangle(
-                            //        positionX - GameEngine.Offset,
-                            //        positionY - GameEngine.Offset,
-                            //        LargeTextureSize,
-                            //        LargeTextureSize);
-
-                            //    gameObjects.Add(new ShieldPowerUp(GameEngine.ShieldTexture, rect));
-                            //    break;
-                            //case 'A':
-                            //    rect = new Rectangle(
-                            //        positionX - GameEngine.Offset,
-                            //        positionY - GameEngine.Offset,
-                            //        LargeTextureSize,
-                            //        LargeTextureSize);
-
-                            //    gameObjects.Add(new ArmorConsumable(GameEngine.ArmorTexture, rect));
-                            //    break;
                             case 'E':
                                 rect = new Rectangle(
                                     positionX - GameEngine.Offset-10,
@@ -168,22 +90,13 @@ namespace Utrepalo.Game
 
                                 gameObjects.Add(new Minion(GameEngine.EnemyTexture, rect));
                                 break;
-                            //case 'L':
-                            //    rect = new Rectangle(
-                            //        positionX - GameEngine.Offset,
-                            //        positionY - GameEngine.Offset,
-                            //        LargeTextureSize,
-                            //        LargeTextureSize);
-
-                            //    gameObjects.Add(new SteelBarricade(GameEngine.SteelWallTexture, rect));
-                            //    break;
                             case '\n':
-                                positionY += LargeTextureSize;
-                                positionX = LargeTextureSize;
+                                positionY += largeTextureSize;
+                                positionX = largeTextureSize;
                                 break;
                         }
 
-                        positionX += LargeTextureSize;
+                        positionX += largeTextureSize;
                     }
                 }
 

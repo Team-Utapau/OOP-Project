@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Utrepalo.Game.Exceptions;
 using Utrepalo.Game.Interfaces;
-using Utrepalo.Game.Test;
 
 namespace Utrepalo.Game.GameObjects
 {
